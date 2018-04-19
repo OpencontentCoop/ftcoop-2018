@@ -1,0 +1,21 @@
+.nav-section,
+.nav-facets{
+  margin-bottom: 30px;
+  margin-top: 64px;
+  @extend .col-md-3;
+  @extend .col-md-offset-1;
+}
+
+.content-main{
+  margin-top: 64px;
+  @extend .col-md-7;
+  &.wide{
+    @extend .col-md-10;
+    @extend .col-md-offset-1;
+  }
+}
+
+.max-width{
+  @extend .col-md-10;
+  @extend .col-md-offset-1;
+}
