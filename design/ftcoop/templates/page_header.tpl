@@ -62,9 +62,9 @@
             </div>
             <div class="col-md-9 same-height" style="min-height: 0;">
 
-                {include uri='design:nav/nav-tools.tpl'}
-
                 {if $pagedata.is_edit|not}
+                    {include uri='design:nav/nav-tools.tpl'}
+
                     {if is_set( $pagedata.persistent_variable.topmenu_template_uri )}
                         {include uri=$pagedata.persistent_variable.topmenu_template_uri}
                     {else}

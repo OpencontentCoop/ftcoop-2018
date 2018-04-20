@@ -50,10 +50,11 @@ class FTCoop2018Operators
                         'show_login' => false,
                         'canonical_language_url' => false,
                         'canonical_url' => false,
-                        'global_root_node' => (int)eZINI::instance('site.ini')->variable('SiteSettings', 'GlobalSiteRootNodeID'),
+                        'global_root_node' => (int)eZINI::instance('site.ini')->variable('SiteSettings',
+                            'GlobalSiteRootNodeID'),
                         'root_node' => (int)eZINI::instance('content.ini')->variable('NodeSettings', 'RootNode'),
                         'is_global_root' => false,
-                );
+                    );
 
                     $currentModuleParams = $GLOBALS['eZRequestedModuleParams'];
                     $request = array(
@@ -66,6 +67,7 @@ class FTCoop2018Operators
                     $data['is_search_page'] = $request['module'] == 'content' && ( $request['function'] == 'search' || $request['function'] == 'advancedsearch' );
                     $data['is_edit'] = $request['module'] == 'content' && $request['function'] == 'edit';
                     $data['is_browse'] = $request['module'] == 'content' && $request['function'] == 'browse';
+                    $data['is_view'] = !$data['is_edit'] && !$data['is_browse'];
 
                     if ($tpl->hasVariable('module_result')) {
                         $moduleResult = $tpl->variable('module_result');
@@ -86,9 +88,13 @@ class FTCoop2018Operators
 
                         $path = ( isset($moduleResult['path']) && is_array($moduleResult['path']) ) ? $moduleResult['path'] : array();
                         $reversePath = array_reverse($path);
+                        $subSiteNodeIdList = self::getSubSiteNodeList();
                         foreach ($reversePath as $key => $item) {
                             if (isset($item['node_id'])) {
                                 $data['reverse_path_id_array'][] = $item['node_id'];
+                                if (isset($subSiteNodeIdList[$item['node_id']]) && $data['subsite_id'] == 0) {
+                                    $data['subsite_id'] = (int)$subSiteNodeIdList[$item['node_id']];
+                                }
                             }
                         }
                         foreach ($path as $key => $item) {
@@ -102,18 +108,18 @@ class FTCoop2018Operators
                         }
 
                         $data['current_node_id'] = (int)$currentNodeId;
-                        if ($data['root_node'] == $currentNodeId){
+                        if ($data['root_node'] == $currentNodeId) {
                             $data['is_homepage'] = true;
                         }
 
-                        if ($data['global_root_node'] == $currentNodeId){
+                        if ($data['global_root_node'] == $currentNodeId) {
                             $data['is_global_root'] = true;
                         }
 
-                        if ( isset( $moduleResult['content_info']['main_node_url_alias'] ) && $moduleResult['content_info']['main_node_url_alias'] ) {
+                        if (isset($moduleResult['content_info']['main_node_url_alias']) && $moduleResult['content_info']['main_node_url_alias']) {
                             $data['canonical_url'] = $moduleResult['content_info']['main_node_url_alias'];
                         }
-                    }else{
+                    } else {
                         $data = array_merge($data, ezjscPackerTemplateFunctions::getPersistentVariable());
                     }
 
@@ -126,7 +132,7 @@ class FTCoop2018Operators
                         $data['show_breadcrumb'] = false;
                     }
 
-                    if(isset($data['show_path']) && $data['show_path'] == false){
+                    if (isset($data['show_path']) && $data['show_path'] == false) {
                         $data['show_breadcrumb'] = false;
                     }
 
@@ -146,4 +152,50 @@ class FTCoop2018Operators
         return null;
     }
 
+    private static function getSubSiteNodeListCache()
+    {
+        $cacheFilePath = eZSys::cacheDirectory() . '/subsite_node_list.cache';
+
+        return eZClusterFileHandler::instance($cacheFilePath);
+    }
+
+    private static function getSubSiteNodeList()
+    {
+        return self::getSubSiteNodeListCache()->processCache(
+            function ($file) {
+                $content = include( $file );
+
+                return $content;
+            },
+            function () {
+                $list = array();
+                $ini = eZINI::instance('ocoperatorscollection.ini');
+                $identifiers = $ini->hasVariable('Subsite', 'Classes') ? $ini->variable('Subsite', 'Classes') : array();
+                if (!empty($identifiers)) {
+                    /** @var eZContentObjectTreeNode[] $nodes */
+                    $nodes = eZContentObjectTreeNode::subTreeByNodeID(array(
+                        'ClassFilterType' => 'include',
+                        'ClassFilterArray' => $identifiers,
+                        'LoadDataMap' => false,
+                        'Limitation' => array()
+                    ), 1);
+                    foreach ($nodes as $node) {
+                        $list[$node->attribute('node_id')] = $node->attribute('contentobject_id');
+                    }
+                }
+
+                return array(
+                    'content' => $list,
+                    'scope' => 'cache',
+                    'datatype' => 'php',
+                    'store' => true
+                );
+            }
+        );
+    }
+
+    public static function clearCache()
+    {
+        self::getSubSiteNodeListCache()->purge();
+    }
 }

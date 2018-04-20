@@ -16,6 +16,7 @@
         'parent_node_id', $root_node.node_id,
         'sort_by', $root_node.sort_array,
         'limit', 7,
+        'limitation', array(),
         'class_filter_type', 'include',
         'class_filter_array', appini('MenuContentSettings', 'TopIdentifierList', array())
     ))}
@@ -49,9 +50,6 @@
                 content_node=$item
                 view='nav-main_item'
                 key=$key
-                current_node_id=$current_node_id
-                ui_context=$ui_context
-                pagedata=$pagedata
                 top_menu_items_count=$top_menu_items_count
                 show_overview=$overview
                 show_dropdown=$dropdown}
@@ -60,7 +58,15 @@
     {/if}
 
 </div>
-
+<script>{literal}$(document).ready(function () {
+    $('.nav-main li[data-node]').each(function () {
+        if ($(this).data('node') === CurrentNode) {
+            $(this).addClass('active');
+        }else if ($.inArray($(this).data('node'), PathArray) > -1){
+            $(this).addClass('current');
+        }
+    });
+});{/literal}</script>
 {*
 	<ul class="nav navbar-nav navbar-right">
 		<li class="firstli"><a href="/Chi-siamo">Chi siamo</a></li>

@@ -12,6 +12,7 @@
     {set $extra_cache_key = concat($extra_cache_key, ftcoop_pagedata().subsite_id)}
     {set $extra_cache_key = concat($extra_cache_key, ftcoop_pagedata().topmenu_template_uri)}
     {set $extra_cache_key = concat($extra_cache_key, ftcoop_pagedata().has_subheader)}
+    {set $extra_cache_key = concat($extra_cache_key, ftcoop_pagedata().is_view)}
 
     {debug-log var=ftcoop_pagedata() msg='ftcoop_pagedata'}
     {debug-log var=$extra_cache_key msg='extra_cache_key'}
@@ -49,11 +50,11 @@
 
     {include uri='design:page_header.tpl'}
 
-    {*if and( $pagedata.website_toolbar, $pagedata.is_edit|not)}
+    {if and( $pagedata.website_toolbar, $pagedata.is_edit|not)}
       {include uri='design:page_toolbar.tpl'}
-    {/if*}
+    {/if}
 
-    {if ftcoop_pagedata().has_subheader|not()}
+    {if and(ftcoop_pagedata().is_view,ftcoop_pagedata().has_subheader|not())}
         {include uri='design:page_subheader.tpl'}
     {/if}
 {/cache-block}
@@ -64,7 +65,7 @@
                 <div class="bg-primary col-md-3 same-height">
                 </div>
                 <div class="col-md-9 same-height" style="min-height: 53px;">
-                    {include uri='design:breadcrumb.tpl'}
+                    {include uri='design:breadcrumb.tpl' pagedata=ftcoop_pagedata()}
                 </div>
             </div>
         </div>
@@ -79,11 +80,13 @@
   {/if}
 </div>
 
+{if ftcoop_pagedata().is_view}
 {cache-block ignore_content_expiry keys=array( $access_type.name, $extra_cache_key )}
     {include uri='design:page_footer.tpl'}
 {/cache-block}
 
-{include uri='design:page_credits.tpl'}
+    {include uri='design:page_credits.tpl'}
+{/if}
 
 {include uri='design:page_footer_script.tpl'}
 
@@ -95,6 +98,13 @@
         {include uri='design:atoms/popup.tpl'}
     {/cache-block}
 {/if}
+
+<script type="text/javascript">//<![CDATA[
+    var UiContext = "{$ui_context}",
+        UriPrefix = "{ftcoop_pagedata().uri_prefix}",
+        PathArray = [{ftcoop_pagedata().reverse_path_id_array|implode(',')}];
+        CurrentNode = {if is_set(ftcoop_pagedata().reverse_path_id_array[0])}{ftcoop_pagedata().reverse_path_id_array[0]}{else}false{/if};
+//]]></script>
 
 <!--DEBUG_REPORT-->
 </body>
