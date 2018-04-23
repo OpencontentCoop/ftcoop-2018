@@ -6,7 +6,7 @@
 ))}
 
 
-<div class="mainstory-item {if $highlight}jumbotron{/if}">
+<div class="mainstory-item {if $highlights}jumbotron{/if}">
 
   <h2 class="mainstory-item-title">
     <a href={$node.url_alias|ezurl()}>

@@ -1,4 +1,4 @@
-<div class="vetrina-item">
+<div class="vetrina-item{if $node|has_attribute( 'image' )} text-white{/if}">
   <h2 class="vetrina-item-title">{$node.name|wash()}</h2>
 
   {if $node|has_attribute( 'description' )}

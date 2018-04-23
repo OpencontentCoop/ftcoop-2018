@@ -50,8 +50,7 @@ class FTCoop2018Operators
                         'show_login' => false,
                         'canonical_language_url' => false,
                         'canonical_url' => false,
-                        'global_root_node' => (int)eZINI::instance('site.ini')->variable('SiteSettings',
-                            'GlobalSiteRootNodeID'),
+                        'global_root_node' => (int)eZINI::instance('site.ini')->variable('SiteSettings', 'GlobalSiteRootNodeID'),
                         'root_node' => (int)eZINI::instance('content.ini')->variable('NodeSettings', 'RootNode'),
                         'is_global_root' => false,
                     );
@@ -73,18 +72,6 @@ class FTCoop2018Operators
                         $moduleResult = $tpl->variable('module_result');
 
                         $data['ui_context'] = $moduleResult['ui_context'];
-
-                        if (isset($moduleResult['content_info'])) {
-
-                            if (isset($moduleResult['content_info']['main_node_url_alias']) && $moduleResult['content_info']['main_node_url_alias']) {
-                                $data['canonical_url'] = $moduleResult['content_info']['main_node_url_alias'];
-                            }
-
-                            if (isset($moduleResult['content_info']['persistent_variable'])
-                                && is_array($moduleResult['content_info']['persistent_variable'])) {
-                                $data = array_merge($data, $moduleResult['content_info']['persistent_variable']);
-                            }
-                        }
 
                         $path = ( isset($moduleResult['path']) && is_array($moduleResult['path']) ) ? $moduleResult['path'] : array();
                         $reversePath = array_reverse($path);
@@ -119,6 +106,19 @@ class FTCoop2018Operators
                         if (isset($moduleResult['content_info']['main_node_url_alias']) && $moduleResult['content_info']['main_node_url_alias']) {
                             $data['canonical_url'] = $moduleResult['content_info']['main_node_url_alias'];
                         }
+
+                        if (isset($moduleResult['content_info'])) {
+
+                            if (isset($moduleResult['content_info']['main_node_url_alias']) && $moduleResult['content_info']['main_node_url_alias']) {
+                                $data['canonical_url'] = $moduleResult['content_info']['main_node_url_alias'];
+                            }
+
+                            if (isset($moduleResult['content_info']['persistent_variable'])
+                                && is_array($moduleResult['content_info']['persistent_variable'])) {
+                                $data = array_merge($data, $moduleResult['content_info']['persistent_variable']);
+                            }
+                        }
+
                     } else {
                         $data = array_merge($data, ezjscPackerTemplateFunctions::getPersistentVariable());
                     }
