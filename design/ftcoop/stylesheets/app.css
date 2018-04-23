@@ -266,6 +266,7 @@ pre code { padding: 0; font-size: inherit; color: inherit; white-space: pre-wrap
 @media (min-width: 768px) { .container { width: 750px; } }
 @media (min-width: 992px) { .container { width: 970px; } }
 @media (min-width: 1200px) { .container { width: 1170px; } }
+@media (min-width: 1570px) { .container { width: 1500px; } }
 
 .container-fluid { margin-right: auto; margin-left: auto; padding-left: 15px; padding-right: 15px; }
 .container-fluid:before, .container-fluid:after { content: " "; display: table; }
@@ -2605,7 +2606,6 @@ footer .newsletter-box button { margin-top: 30px; width: 100%; }
 */
 .leaflet-tile-pane { filter: grayscale(100%); }
 
-@media (min-width: 1570px) { .container { width: 1500px; } }
 .nav-main li.current ul li.active > a { color: #fff !important; }
 
 .radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] { float: left; margin-left: -20px; width: auto; height: auto; }
