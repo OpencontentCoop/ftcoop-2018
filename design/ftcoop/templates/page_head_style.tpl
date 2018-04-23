@@ -20,9 +20,3 @@
         'websitetoolbar.css'
     ) )}
 {/if}
-
-{*todo chiedere a Mirko i sorgenti*}
-<style>
-    @media (min-width: 1570px) {ldelim} .container {ldelim} width: 1500px; {rdelim} {rdelim}
-    .nav-main li.current ul li.active > a{ldelim} color: #fff !important;{rdelim}
-</style>

@@ -1221,3 +1221,12 @@ footer{
 .leaflet-tile-pane {
   filter: grayscale(100%);
 }
+
+@media (min-width: 1570px) { .container { width: 1500px; } }
+.nav-main li.current ul li.active > a{ color: #fff !important;}
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+  float: left;
+  margin-left: -20px;
+  width: auto;
+  height: auto;
+}
