@@ -1,3 +1,4 @@
+<style>@import url("https://fonts.googleapis.com/css?family=Lato:300,400,700,900");</style>
 {if is_unset( $load_css_file_list )}
     {def $load_css_file_list = true()}
 {/if}
