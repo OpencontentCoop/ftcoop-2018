@@ -201,34 +201,33 @@
 
 
 
-        {* mostra comunicati e web tv legati alla società *}
-        {def $filtri_comunicati = array(concat('submeta_relazioni___id_si:',$node.contentobject_id))
-             $filtri_web_tv = array(concat('submeta_cooperative___id_si:',$node.contentobject_id))
-             $filtri_audio = array(concat('submeta_relazioni___id_si:',$node.contentobject_id))
-             $filtri_pubblicazioni = array(concat('submeta_relazioni___id_si:',$node.contentobject_id))
-        }
+{* mostra comunicati e web tv legati alla società *}
+{def $filtri_comunicati = array(concat(solr_meta_subfield('relazioni','id'),':',$node.contentobject_id))
+     $filtri_web_tv = array(concat(solr_meta_subfield('persone','id'),':',$node.contentobject_id))
+     $filtri_audio = array(concat(solr_meta_subfield('relazioni','id'),':',$node.contentobject_id))
+     $filtri_pubblicazioni = array(concat(solr_meta_subfield('relazioni','id'),':',$node.contentobject_id))}
 
-        {def  $comunicati_rel = fetch('ezfind', 'search', hash('class_id', array( 'comunicato' ),
-                                                              'sort_by', hash( 'published', 'desc' ),
-                                                              'limit', 10,
-                                                              'filter', $filtri_comunicati
-                                                              ))
-              $web_tv_rel = fetch('ezfind', 'search', hash('class_id', array( 'web_tv' ),
+{def  $comunicati_rel = fetch('ezfind', 'search', hash('class_id', array( 'comunicato' ),
+                                                      'sort_by', hash( 'published', 'desc' ),
+                                                      'limit', 10,
+                                                      'filter', $filtri_comunicati
+                                                      ))
+      $web_tv_rel = fetch('ezfind', 'search', hash('class_id', array( 'web_tv' ),
+                                                  'sort_by', hash( 'published', 'desc' ),
+                                                  'limit', 3,
+                                                  'filter', $filtri_web_tv
+                                                  ))
+      $audio_rel = fetch('ezfind', 'search', hash('class_id', array( 'audio' ),
+                                                  'sort_by', hash( 'published', 'desc' ),
+                                                  'limit', 3,
+                                                  'filter', $filtri_audio
+                                                  ))
+      $pubblicazioni_rel = fetch('ezfind', 'search', hash('class_id', array( 'pubblicazione' ),
                                                           'sort_by', hash( 'published', 'desc' ),
                                                           'limit', 3,
-                                                          'filter', $filtri_web_tv
+                                                          'filter', $filtri_pubblicazioni
                                                           ))
-              $audio_rel = fetch('ezfind', 'search', hash('class_id', array( 'audio' ),
-                                                          'sort_by', hash( 'published', 'desc' ),
-                                                          'limit', 3,
-                                                          'filter', $filtri_audio
-                                                          ))
-              $pubblicazioni_rel = fetch('ezfind', 'search', hash('class_id', array( 'pubblicazione' ),
-                                                                  'sort_by', hash( 'published', 'desc' ),
-                                                                  'limit', 3,
-                                                                  'filter', $filtri_pubblicazioni
-                                                                  ))
-        }
+}
 
 
 {if or($comunicati_rel.SearchCount,

@@ -62,7 +62,7 @@
               <dt>{$node.data_map.fax.contentclass_attribute_name}</dt>
               <dd>{attribute_view_gui attribute=$node.data_map.fax}</dd>
         {/if}
-		{if $node.object.data_map.servizio.has_content}
+		    {if $node.object.data_map.servizio.has_content}
               <dt>{$node.data_map.servizio.contentclass_attribute_name}</dt>
               <dd>{attribute_view_gui attribute=$node.data_map.servizio}</dd>
         {/if}
@@ -90,38 +90,36 @@
 </div>
 
 
-      {def $filtri_comunicati = array(concat('submeta_relazioni___id_si:',$node.contentobject_id))
-      $filtri_web_tv = array(concat('submeta_persone___id_si:',$node.contentobject_id))
-      $filtri_audio = array(concat('submeta_relazioni___id_si:',$node.contentobject_id))
-      $filtri_pubblicazioni = array(concat('submeta_relazioni___id_si:',$node.contentobject_id))
-      }
+{def $filtri_comunicati = array(concat(solr_meta_subfield('relazioni','id'),':',$node.contentobject_id))
+     $filtri_web_tv = array(concat(solr_meta_subfield('persone','id'),':',$node.contentobject_id))
+     $filtri_audio = array(concat(solr_meta_subfield('relazioni','id'),':',$node.contentobject_id))
+     $filtri_pubblicazioni = array(concat(solr_meta_subfield('relazioni','id'),':',$node.contentobject_id))}
 
-      {def $comunicati_rel = fetch('ezfind', 'search', hash('class_id', array( 'comunicato' ),
+{def $comunicati_rel = fetch('ezfind', 'search', hash('class_id', array( 'comunicato' ),
       'sort_by', hash( 'published', 'desc' ),
       'limit', 10,
       'filter', $filtri_comunicati
       ))
-      $web_tv_rel = fetch('ezfind', 'search', hash('class_id', array( 'web_tv' ),
+     $web_tv_rel = fetch('ezfind', 'search', hash('class_id', array( 'web_tv' ),
       'sort_by', hash( 'published', 'desc' ),
       'limit', 3,
       'filter', $filtri_web_tv
       ))
-      $audio_rel = fetch('ezfind', 'search', hash('class_id', array( 'audio' ),
+     $audio_rel = fetch('ezfind', 'search', hash('class_id', array( 'audio' ),
       'sort_by', hash( 'published', 'desc' ),
       'limit', 3,
       'filter', $filtri_audio
       ))
-      $pubblicazioni_rel = fetch('ezfind', 'search', hash('class_id', array( 'pubblicazione' ),
+     $pubblicazioni_rel = fetch('ezfind', 'search', hash('class_id', array( 'pubblicazione' ),
       'sort_by', hash( 'published', 'desc' ),
       'limit', 3,
       'filter', $filtri_pubblicazioni
-      ))
-      }
+      ))}
 
 {if or($comunicati_rel.SearchCount,
-$web_tv_rel.SearchCount,
-$audio_rel.SearchCount,
-$pubblicazioni_rel.SearchCount
+       $web_tv_rel.SearchCount,
+       $audio_rel.SearchCount,
+       $pubblicazioni_rel.SearchCount
 )}
 
 
