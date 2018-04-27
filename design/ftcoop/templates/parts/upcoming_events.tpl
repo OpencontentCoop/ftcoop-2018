@@ -6,7 +6,8 @@
 
 {set_defaults(hash(
   'show_title', true(),
-  'number', 5
+  'number', 5,
+  'items_per_row', 3
 ))}
 
 
@@ -31,7 +32,7 @@
 {if $upcoming_events}
 
   <h3><a href={$events_node.url_alias|ezurl()}>{if $title}{$title}{else}{$events_node.name|wash()}{/if}</a> {*<a class="btn btn-default pull-right" href={$events_node.url_alias|ezurl()}>Vedi tutti gli eventi</a>*}</h3>
-  <div class="carousel-container owl-carousel-contained">
+  <div class="carousel-container owl-carousel-contained" data-items="{$items_per_row}">
     {include uri='design:atoms/owl_carousel.tpl' items=$upcoming_events i_view='grid_item'}
   </div>
 
