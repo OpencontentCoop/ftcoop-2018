@@ -45,8 +45,13 @@
                   <select class="facet-select" data-placeholder="{$item.name|wash()}" name="{$item.name|wash()}" data-field="{$item.field|wash()}" data-sort="alpha" data-limit="100" style="max-width: 33%">
                     <option></option>
                     {def $data = api_search(concat('select-fields [metadata.id as id, metadata.name as name] classes [',$item.class,'] limit 100 sort [name=>asc]'))}                    
-                    {foreach $data as $facet}
-                    <option class="facet-option facet-{$facet.id}" value="{$facet.id}" data-name="{$facet.name|wash()}">{$facet.name|wash()}</option>
+                    {foreach $data as $facet}                    
+                    <option class="facet-option facet-{$facet.id}" 
+                            value="{$facet.id}" 
+                            {if and($item.field|eq('settore.id'), is_set($view_parameters.settore), $view_parameters.settore|eq($facet.id))}selected="selected"{/if}
+                            data-name="{$facet.name|wash()}">
+                          {$facet.name|wash()}
+                    </option>
                     {/foreach}
                     {undef $data}
                   </select>
@@ -137,7 +142,7 @@ tools.settings('endpoint', {ldelim}
     search: {'/opendata/api/content/search/'|ezurl()},
     class: {'/opendata/api/classes/'|ezurl()}
 {rdelim})
-
+var isSelectedSettore = {if is_set($view_parameters.settore)}{$view_parameters.settore|int()}{else}0{/if};
 {literal}
 $(document).ready(function () {
 
@@ -210,8 +215,12 @@ $(document).ready(function () {
     };
 
     var loadContents = function () {
-        $('#name').val('');        
-        runQuery(mainQuery);
+        $('#name').val('');     
+        if (isSelectedSettore > 0){
+          runQuery('settore.id in ['+isSelectedSettore+'] '+mainQuery);
+        }else{
+          runQuery(mainQuery);
+        }        
     };
 
     $('.form-facets').on('submit', function (e) {

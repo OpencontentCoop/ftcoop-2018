@@ -7,7 +7,7 @@
   <div id="cooperative-987" class="owl-carousel owl-theme">
 
       <div class="carousel-item agricole">
-        <a href="#">
+        <a href="{'/Cooperative/(settore)/764620'|ezurl(no)}">
           <img src={'images/photo/agricole.png'|ezdesign()} />
           <h3>Cooperative <span>Agricole</span></h3>
           <span class="fa-stack fa-1x">
@@ -25,7 +25,7 @@
       </div>
 
       <div class="carousel-item consumo" >
-        <a href="#">
+        <a href="{'/Cooperative/(settore)/764615'|ezurl(no)}">
           <img src={'images/photo/consumo.png'|ezdesign()} />
           <h3>Cooperative <span>Consumo</span></h3>
           <span class="fa-stack fa-1x">
@@ -43,7 +43,7 @@
       </div>
 
       <div class="carousel-item lssa">
-        <a href="#">
+        <a href="{'/Cooperative/(settore)/764610'|ezurl(no)}">
           <img src={'images/photo/lssa.png'|ezdesign()} />
           <h3>Cooperative <span>Lavoro, Servizio, Sociale, Abitazione</span></h3>
           <span class="fa-stack fa-1x">
@@ -61,7 +61,7 @@
       </div>
 
       <div class="carousel-item credito">
-        <a href="#">
+        <a href="{'/Cooperative/(settore)/764605'|ezurl(no)}">
           <img src={'images/photo/credito.png'|ezdesign()}/>
           <h3>Cooperative <span>Credito</span></h3>
           <span class="fa-stack fa-1x">

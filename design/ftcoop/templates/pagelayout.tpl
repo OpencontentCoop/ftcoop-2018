@@ -38,8 +38,8 @@
 </head>
 <body>
 
-    {* Google Tag Manager (noscript) richiesta S. Perugini 12.12.2016 *}
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P2JCRFC" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+{* Google Tag Manager (noscript) richiesta S. Perugini 12.12.2016 *}
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P2JCRFC" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div id="page">
 
@@ -103,6 +103,7 @@
     var UiContext = "{$ui_context}",
         UriPrefix = "{ftcoop_pagedata().uri_prefix}",
         PathArray = [{ftcoop_pagedata().reverse_path_id_array|implode(',')}];
+        CurrentUserIsLoggedIn = {if $current_user.is_logged_in}true{else}false{/if};
         CurrentNode = {if is_set(ftcoop_pagedata().reverse_path_id_array[0])}{ftcoop_pagedata().reverse_path_id_array[0]}{else}false{/if};
 //]]></script>
 
