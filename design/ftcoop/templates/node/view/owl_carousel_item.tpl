@@ -1,12 +1,17 @@
 <div class="carousel-item">
 
-  <a href={$node|attribute('image').content[$wide_class].url|ezroot} data-gallery>
-    {attribute_view_gui attribute=$node|attribute('image') image_class=$image_class}
-  </a>
+	<a href={$node.url_alias|ezurl()}>
+	  {attribute_view_gui attribute=$node|attribute('image') image_class=$image_class}
+	</a>
 
-  <div class="carousel-item-actions">
-    <a href="{$node.data_map.image.content.original.url|ezroot(no)}" class="download" title="Download">
-      <i class="fa fa-download"></i> <span class="sr-only">Download</span>
-    </a>
-  </div>
+	<div class="carousel-caption">
+
+	  {def $title=$node.name|wash()}
+	  {set $title = $title|oc_shorten(90,'...')}
+	  <div>
+	    <h3><a style="background-color: rgba(51,51,51,0.5);color: #fff" href={$node.url_alias|ezurl()}>{$title}</a></h3>
+	  </div>
+
+	</div>
+
 </div>

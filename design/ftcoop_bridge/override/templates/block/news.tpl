@@ -13,10 +13,10 @@
       'class_filter_type',  'include',
       'class_filter_array', array( 'comunicato' )  )
     )}
-  <ul>
+  <ul class="list-unstyled">
   {foreach $items as $item}
     <li class="news-item">
-      <span class="news-item-meta">{$item.object.published|l10n(date)}</span>
+      <small class="news-item-meta">{$item.object.published|l10n(date)}</small><br/>
       <a href={$item.url_alias|ezurl()}}>{$item.name|wash}</a>
     </li>
   {/foreach}

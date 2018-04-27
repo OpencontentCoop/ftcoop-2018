@@ -54,27 +54,6 @@ $videos_classes = appini( 'ClassesSettings', 'VideoClasses', array() )
         </div>
       {/if}
 
-
-
-      {*if $nodes|count()|eq(1)}
-      {include uri='design:atoms/image.tpl'
-           image_class=appini( 'ContentViewFull', 'DefaultImageClass', 'wide' )
-           item=$nodes[0]
-           caption=$node|attribute( 'caption' )}
-        <div class="text-center">
-          <a class="btn btn-xs btn-info" href="{$nodes[0]|attribute( 'image' ).content.original.url|ezroot(no)}" class="download" title="Download">
-            <span class="glyphicon glyphicon-cloud-download"></span> HQ
-          </a>
-        </div>
-
-
-      {elseif $nodes|count()|gt(0)}
-        {def $videos_classes = appini( 'ClassesSettings', 'VideoClasses', array() )}
-        <div class="carousel-container owl_carousel-single">
-          {include uri='design:atoms/owl_carousel.tpl' items=$nodes}
-        </div>
-      {/if*}
-
       {if or($images|count()|gt(0),$node|attribute("relazioni"))}
 
       <div class="row">

@@ -12,20 +12,18 @@
     {/foreach}
 {/if}
 
-<div class="content-view-block block-view-{$block.view} {if $image}row{/if}">
+<div class="mainstory-item">
 
-    <h2 class="block-title"><a href="{$valid_node.url_alias|ezurl(no)}">{$valid_node.name|wash()}</a></h2>
+    <h2 class="mainstory-item-title"><a href="{$valid_node.url_alias|ezurl(no)}">{$valid_node.name|wash()}</a></h2>
     
     {if $image}
-    <div class="col-md-6">
-        {attribute_view_gui href=$valid_node.url_alias|ezurl() attribute=$image image_class=large fluid=true()}
-    </div>
+        {attribute_view_gui href=$valid_node.url_alias|ezurl() attribute=$image image_class=imagefull fluid=true()}
     {/if}
 	
     {if $valid_node|has_abstract()}
-    {if $image}<div class="col-md-6">{else}<div class="content">{/if}
+    <div class="mainstory-item-abstract abstract">
         {$valid_node|abstract()}
-        <p class="goto"><a href="{$valid_node.url_alias|ezurl(no)}">Leggi tutto</a></p>
+        <p class="goto"><a href="{$valid_node.url_alias|ezurl(no)}">Scopri di +</a></p>
     </div>	
     {/if}
 	

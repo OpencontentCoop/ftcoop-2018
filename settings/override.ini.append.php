@@ -75,6 +75,11 @@ MatchFile=grid_item/web_tv.tpl
 Subdir=templates
 Match[class_identifier]=web_tv
 
+[owl_carousel_item_image]
+Source=node/view/owl_carousel_item.tpl
+MatchFile=owl_carousel_item/image.tpl
+Subdir=templates
+Match[class_identifier]=image
 
 [owl_carousel_item_web_tv]
 Source=node/view/owl_carousel_item.tpl
