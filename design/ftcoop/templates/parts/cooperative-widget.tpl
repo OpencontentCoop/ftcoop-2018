@@ -4,7 +4,7 @@
       <div class="section-header max-width">
         <h2>Le cooperative <span>500 attività produttive</span></h2>
         <br />
-        <a class="btn btn-default" href="#">VAI ALLA RICERCA AVANZATA</a>
+        <a class="btn btn-default" href="{'/Cooperative'|ezurl(no)}">VAI ALLA RICERCA AVANZATA</a>
       </div>
 
     </div>

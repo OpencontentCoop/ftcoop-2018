@@ -6,11 +6,11 @@
         {include uri='design:nav/nav-section.tpl'}
 
         <div class="content-main">
-
-            <h1>{$node.name|wash()}</h1>
+            
+            <h1>{$node.name|wash()}</h1>            
 
             {if $node.object.data_map.page.has_content}
-                {attribute_view_gui attribute=$node.object.data_map.page}
+                {attribute_view_gui attribute=$node.object.data_map.page has_navigation=true()}
             {else}
                 {*if $node|has_attribute( 'short_description' )}
                   <div class="abstract">
@@ -33,7 +33,7 @@
                     {attribute_view_gui attribute=$node|attribute( 'description' )}
                   </div>
                 {/if*}
-
+                
                 {include uri='design:parts/children.tpl' view='line'}
             {/if}
 

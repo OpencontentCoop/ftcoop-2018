@@ -24,7 +24,7 @@
       {set $title = $title|oc_shorten(90,'...')}
       <div>
         <p class="date">{$node.object.published|l10n(date)}</p>
-        <h3><a href={$node.url_alias|ezurl()}>{$title}</a></h3>
+        <h4><a style="background-color: rgba(51,51,51,0.5);color: #fff" href={$node.url_alias|ezurl()}>{$title}</a></h4>
       </div>
 
     </div>

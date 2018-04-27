@@ -33,16 +33,14 @@
 <div class="content-view-block block-type-{$block.view}">
   {if $block.name}
     {if is_set($parent_node)}
-      <h2 class="block-title"><a href={$parent_node.url_alias|ezurl()}>{$block.name|wash()}</a></h2>
+      <h3 class="block-title"><a href={$parent_node.url_alias|ezurl()}>{$block.name|wash()}</a></h3>
     {else}
-      <h2 class="block-title">{$block.name|wash()}</h2>
+      <h3 class="block-title">{$block.name|wash()}</h3>
     {/if}
   {/if}
-  <ul class="media-list">
-    {foreach $valid_nodes as $_node}
-      {node_view_gui content_node=$_node view="media-list_item"}
-    {/foreach}
-  </ul>
+  <div class="carousel-container owl-carousel-contained" data-items=1 data-navstyle="dots">
+    {include uri='design:atoms/owl_carousel.tpl' items=$valid_nodes i_view='grid_item'}
+  </div>
 
   {if and(is_set($parent_node),is_set( $block.custom_attributes.link_text ))}
 

@@ -30,12 +30,6 @@
 	
     {if $node.object.data_map.show_children.data_int}
 
-      {*include uri='design:parts/children-infinitescroll.tpl'
-			   parent_node = fetch( content, node, hash( node_id, ezini( 'NodeSettings', 'RootNode', 'content.ini' ) ) )
-			   type='include'
-			   include_classes=ezini( 'FederazioneSettings', 'TopmenuClassiSottositi', 'ftcoop.ini' )
-			   view='panel'*}
-
       {def $root_node = fetch( 'content' , 'node' , hash( 'node_id' , ezini( 'NodeSettings', 'RootNode', 'content.ini' )))
            $subsite_menuhidden = ezini( 'FederazioneSettings', 'TopmenuSottositiNascosti', 'ftcoop.ini' )
            $sottositi_t = fetch( 'content', 'list', hash( 'parent_node_id', ezini( 'NodeSettings', 'RootNode', 'content.ini' ),
@@ -55,51 +49,26 @@
       {/foreach}
 
 
-
+      <div class="content-view-children">
       {foreach $sottositi as $i => $child }
-
         {def $url = $child.url_alias|ezurl}
         {if and( $child.data_map.link, $child.data_map.link.has_content )}
           {set $url = $child.data_map.link.content}
         {/if}
-
-
-        {if $i|eq(0)}
-          <div class="row">
-        {/if}
-
-          <div class="sottosito">
-
-            <div class="thumbnail">
-              {*
-                {if and( $child.data_map.image, $child.data_map.image.has_content )}
-                  {attribute_view_gui attribute=$child.data_map.image image_class=large href=$url}
-                {else}
-                  <div style="opacity:0.5">{attribute_view_gui attribute=$node.data_map.image image_class=large href=$url}</div>
-                {/if}
-              *}
-              <div class="caption">
-                <h3><a href={$url}>{$child.name|wash()}</a></h3>
+          <a href={$url} class="line-item alt settore-MS_30">
+            <div class="line-item-content">
+              
+                <h4 class="line-item-heading">{$child.name|wash()}</h4>
                 {*if and( $child.data_map.slug, $child.data_map.slug.has_content )}
                   {attribute_view_gui attribute=$child.data_map.slug}
-                {/if*}
-              </div>
+                {/if*}              
 
             </div>
-          </div>
-
+            <i class="far fa-2x fa-plus-square"></i>
+          </a>
         {undef $url}
-
-        {if eq(sum($i,1)|mod(3),0)}
-          </div>
-          <div class="row">
-        {/if}
-        {if $i|eq($sottositi|count()|sub(1))}
-          </div>
-        {/if}
-
       {/foreach}
-
+    </div>
 
     {/if}
 

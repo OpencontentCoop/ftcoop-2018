@@ -9,28 +9,27 @@
     {set $url = $node|attribute( 'location' ).content}
 {/if}
  
-<li class="media">
+<li class="media grid-item ">
   {if $node|has_attribute( 'image' )}
-  <a class="pull-left" href="{if is_set( $node.url_alias )}{$node.url_alias|ezurl('no')}{else}#{/if}">    
-	{attribute_view_gui attribute=$node|attribute( 'image' ) href=false() image_class='squaremini' css_class="media-object"}
-  </a>
+  <div class="grid-item-image">
+    <a href="{if is_set( $node.url_alias )}{$node.url_alias|ezurl('no')}{else}#{/if}">    
+  	{attribute_view_gui attribute=$node|attribute( 'image' ) href=false() image_class='large'}
+    </a>
+  </div>
   {/if}
-  <div class="media-body">
+  <div class="grid-item-content">
     
-	  
 	  {if $node|has_attribute( 'publish_date' )}
-        <small class="date">{$node|attribute( 'publish_date' ).content.timestamp|l10n('date')}</small>
+        <span class="grid-item-date">{$node|attribute( 'publish_date' ).content.timestamp|l10n('date')}</span>
       {/if}
 	  
-	  {if is_set( $node.data_map.title )}
-		<a href={$url}>{attribute_view_gui attribute=$node.data_map.title}</a>
-	  {else}
-		<a href={$url}>{$node.name|wash()}</a>
-	  {/if}
-
-    {*if $node|has_abstract()}
-      <p>{$node|abstract()|oc_shorten( 150 )}</p>
-    {/if*}
+    <h3 class="grid-item-title">
+      {if is_set( $node.data_map.title )}
+  		<a href={$url}>{attribute_view_gui attribute=$node.data_map.title}</a>
+  	  {else}
+  		<a href={$url}>{$node.name|wash()}</a>
+  	  {/if}
+    </h3>
 	
   </div>
 </li>

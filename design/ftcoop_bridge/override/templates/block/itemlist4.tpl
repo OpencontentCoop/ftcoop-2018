@@ -32,27 +32,20 @@
 
 {if $valid_nodes|count()|gt(0)}
 
-<div class="content-view-block block-{$block.view}">
-	{if $block.name}    
+<div class="content-view-block block-{$block.view}" id="block-{$block.id}">
+	{*if $block.name}    
         <h2 class="block-title">{$block.name}</h2>    
-    {/if}	
-
-	<ul class="nav nav-tabs">					 
-		{foreach $valid_nodes as $index => $node}
-		<li class="{if $index|eq(0)}active{/if}">											
-			<a href="#{$node.name|slugize()}" title="{$node.name|wash()}" data-toggle="tab">
-			  <strong>{$node.name|wash()}</strong>
-			</a>					
-		</li>
-		{/foreach}
-	</ul>	
-	<div class="tab-content">		
-		{foreach $valid_nodes as $index => $node}
-		<div id="{$node.name|slugize()}" class="tab-pane{if $index|eq(0)} active{/if}">
-			{node_view_gui content_node=$node view="tab-content_item" image_class="medium"}			
-		</div>
-		{/foreach}
-	</div>			
+    {/if*}	
+	
+    {foreach $valid_nodes as $index => $node}
+    <h3 class="block-title">
+          {$node.name|wash()}
+    </h3>
+    <div id="{$node.name|slugize()}">
+        {node_view_gui content_node=$node view="tab-content_item" image_class="imagefull"}          
+    </div>
+    {delimiter}<hr />{/delimiter}
+    {/foreach}
 
 </div>
 

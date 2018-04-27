@@ -54,27 +54,6 @@ $videos_classes = appini( 'ClassesSettings', 'VideoClasses', array() )
         </div>
       {/if}
 
-
-
-      {*if $nodes|count()|eq(1)}
-      {include uri='design:atoms/image.tpl'
-           image_class=appini( 'ContentViewFull', 'DefaultImageClass', 'wide' )
-           item=$nodes[0]
-           caption=$node|attribute( 'caption' )}
-        <div class="text-center">
-          <a class="btn btn-xs btn-info" href="{$nodes[0]|attribute( 'image' ).content.original.url|ezroot(no)}" class="download" title="Download">
-            <span class="glyphicon glyphicon-cloud-download"></span> HQ
-          </a>
-        </div>
-
-
-      {elseif $nodes|count()|gt(0)}
-        {def $videos_classes = appini( 'ClassesSettings', 'VideoClasses', array() )}
-        <div class="carousel-container owl_carousel-single">
-          {include uri='design:atoms/owl_carousel.tpl' items=$nodes}
-        </div>
-      {/if*}
-
       {if or($images|count()|gt(0),$node|attribute("relazioni"))}
 
       <div class="row">
@@ -178,7 +157,7 @@ $web_tv_rel = array()}
 {/foreach}
 
 {foreach $related_object_ids as $kk => $rel_id}
-  {set $filtri_web_tv = $filtri_web_tv|append(concat('submeta_cooperative___id_si:',$rel_id))}
+  {set $filtri_web_tv = $filtri_web_tv|append(concat(solr_meta_subfield('cooperative','id'),':',$rel_id))}
 {/foreach}
 
 {* se non ci sono organizzazioni, prende le persone *}
@@ -186,14 +165,14 @@ $web_tv_rel = array()}
   {* crea un array con gli object_ids delle persone correlate al nodo corrente*}
   {foreach $persone as $p}
     {set $related_object_ids = $related_object_ids|append($p.contentobject_id)}
-    {set $filtri_web_tv = $filtri_web_tv|append(array(concat('submeta_persone___id_si:',$p.contentobject_id)))}
+    {set $filtri_web_tv = $filtri_web_tv|append(array(concat(solr_meta_subfield('persone','id'),':',$p.contentobject_id)))}
   {/foreach}
 {/if}
 
 {* prende tutti i comunicati associati a organizzazioni e persone associate al nodo corrente *}
 
 {foreach $related_object_ids as $kk => $rel_id}
-  {set $filtri_comunicati = $filtri_comunicati|append(concat('submeta_relazioni___id_si:',$rel_id))}
+  {set $filtri_comunicati = $filtri_comunicati|append(concat(solr_meta_subfield('relazioni','id'),':',$rel_id))}
 {/foreach}
 
 {* se c'è più di una condizione, mette in or le condizioni *}
@@ -204,15 +183,15 @@ $web_tv_rel = array()}
 
 {* aggiunge la condizione per escludere il comunicato corrente ($node) dalla fetch *}
 {if gt($filtri_comunicati|count(),0)}
-  {set $filtri_comunicati = array(concat('NOT meta_id_si:',$node.contentobject_id),$filtri_comunicati)}
+  {set $filtri_comunicati = array(concat('NOT ', solr_meta_field('id'),':',$node.contentobject_id),$filtri_comunicati)}
 {/if}
 {*
   $filtri comunicati è:
   una condizione:
-  array('NOT meta_id_si:<$node.contentobject_id>',array('submeta_relazioni___id_si:YYYY'))
+  array('NOT solr_meta_field('id'):<$node.contentobject_id>',array(solr_meta_subfield('relazioni','id'),':YYYY'))
 
   più condizioni
-  array('NOT meta_id_si:<$node.contentobject_id>',array('submeta_relazioni___id_si:YYYY','submeta_relazioni___id_si:ZZZZ',...))
+  array('NOT solr_meta_field('id'):<$node.contentobject_id>',array('solr_meta_subfield('relazioni','id'):YYYY','solr_meta_subfield('relazioni','id'):ZZZZ',...))
 *}
 
 

@@ -21,9 +21,7 @@
 {def $main_title = 'Cerca'
      $facet_title = 'Filtra ricerca per...'
      $navigation = array(
-      hash( 'field', 'settore.id', 'name', 'Settore', 'limit', 100, 'class', 'macrosettore' ),
-      hash( 'field', 'comunita.id', 'name', 'Territorio', 'limit', 100, 'class', 'comunita' ),        
-      hash( 'field', 'settore_attivita.id', 'name', 'Settore di attivita', 'limit', 100, 'class', 'settore_attivita' )
+      hash( 'field', 'cooperativa_o_consorzio_di_riferimento.id', 'name', 'Struttura', 'limit', 500, 'class', 'societa' )
      )}
 
   <section>
@@ -39,23 +37,23 @@
                   <input id="searchfacet" data-content="Premi invio per cercare" type="text" class="form-control" placeholder="Cerca" name="query" value="" style="width:100%;">
                   <span id="searchfacetclear" class="fa fa-times-circle" style="display:none;position: absolute;right: 5px;top: 0;bottom: 0;height: 30px;margin: auto;font-size: 30px;cursor: pointer;color: #ccc;"></span>                  
                 </div>
-
+                {*
                 <h3>{$facet_title}</h3>
                 {foreach $navigation as $item}
-                  <select class="facet-select" data-placeholder="{$item.name|wash()}" name="{$item.name|wash()}" data-field="{$item.field|wash()}" data-sort="alpha" data-limit="100" style="max-width: 33%">
-                    <option></option>
-                    {def $data = api_search(concat('select-fields [metadata.id as id, metadata.name as name] classes [',$item.class,'] limit 100 sort [name=>asc]'))}                    
+                {def $data = api_search(concat('select-fields [metadata.id as id, metadata.name as name] classes [',$item.class,'] limit 500 sort [name=>asc]'))}                
+                  <select class="facet-select" data-placeholder="{$item.name|wash()}" name="{$item.name|wash()}" data-field="{$item.field|wash()}" data-sort="alpha" data-limit="100" style="max-width: 1000%">
+                    <option></option>                    
                     {foreach $data as $facet}                    
                     <option class="facet-option facet-{$facet.id}" 
-                            value="{$facet.id}" 
-                            {if and($item.field|eq('settore.id'), is_set($view_parameters.settore), $view_parameters.settore|eq($facet.id))}selected="selected"{/if}
+                            value="{$facet.id}"                             
                             data-name="{$facet.name|wash()}">
                           {$facet.name|wash()}
                     </option>
-                    {/foreach}
-                    {undef $data}
+                    {/foreach}                    
                   </select>
+                {undef $data}
                 {/foreach}
+                *}
                 <button type="submit" class="btn btn-info hide"><i class="fa fa-search"></i>Cerca</button>
               </form>
           </div>
@@ -80,26 +78,13 @@
   {{include tmpl="#tpl-pagination"/}}
   <div class="content-view-children"> 
   {{for searchHits ~uriPrefix=uriPrefix}}
-  <a href="{{:~uriPrefix}}/content/view/full/{{:metadata.mainNodeId}}" title="{{:~i18n(metadata.name)}}" class="line-item alt class-{{:metadata.classIdentifier}} settore-{{:~i18n(data, 'settore')[0].remoteId}}">
+  <a href="{{:~uriPrefix}}/content/view/full/{{:metadata.mainNodeId}}" title="{{:~i18n(metadata.name)}}" class="line-item alt class-{{:metadata.classIdentifier}} settore-MS_20">
     <div class="line-item-content">
       <h4 class="line-item-heading">
         {{:~i18n(metadata.name)}}
-        {{if ~i18n(data, 'responsabile')}}
-          <small>Responsabile: {{for ~i18n(data,'responsabile')}}{{:~i18n(name)}}{{/for}}</small>
-        {{/if}}
-      </h4>
-      {{if ~i18n(data, 'attivita_e_servizi') || ~i18n(data, 'sigla')}}    
-        <div class="line-item-abstract">
-        {{if ~i18n(data, 'attivita_e_servizi')}}
-            {{:~i18n(data, 'attivita_e_servizi')}}
-        {{/if}}
-        {{if ~i18n(data, 'sigla')}}
-            <strong>Sigla:</strong> {{:~i18n(data, 'sigla')}}
-        {{/if}}
-        </div>
-      {{/if}}
-      <i class="far fa-2x fa-plus-square"></i>
+      </h4>      
     </div>
+    <i class="far fa-2x fa-plus-square"></i>
   </a> 
   {{else}}
     <i class="fa fa-times"></i> Nessun risultato corrisponde ai criteri di ricerca
@@ -130,9 +115,8 @@
     'jsrender.js',
     'plugins/chosen.jquery.js'
 ))}
-
 <script type="text/javascript" language="javascript">
-var ParentNodeId = {$node.object.main_node_id};
+var ParentNodeId = 2;
 
 var uriPrefix = {'/'|ezurl()};
 var tools = $.opendataTools;
@@ -142,7 +126,7 @@ tools.settings('endpoint', {ldelim}
     search: {'/opendata/api/content/search/'|ezurl()},
     class: {'/opendata/api/classes/'|ezurl()}
 {rdelim})
-var isSelectedSettore = {if is_set($view_parameters.settore)}{$view_parameters.settore|int()}{else}0{/if};
+
 {literal}
 $(document).ready(function () {
 
@@ -155,15 +139,16 @@ $(document).ready(function () {
       facets.push($(this).data());
       $(this).chosen({
         allow_single_deselect:true,
-        width:'33%'
+        width:'100%'
       }).on('change', function (e) {
         $('.form-facets').trigger('submit');
       });
     });
 
-    var classQuery = 'classes [societa] ';
+    var classQuery = 'classes [personale] ';
     var facetQuery = tools.buildFacetsString(facets);
-    var mainQuery = classQuery+'subtree [' + ParentNodeId + '] sort [name=>asc] limit ' + pageLimit + ' facets [' + facetQuery + ']';    
+    var socioFilter = 'socio_o_dipendente.id = 501453 and ';
+    var mainQuery = classQuery+'subtree [' + ParentNodeId + '] and '+socioFilter+' sort [name=>asc] limit ' + pageLimit + ' facets [' + facetQuery + ']';    
 
     var currentPage = 0;
     var queryPerPage = [];
@@ -215,12 +200,8 @@ $(document).ready(function () {
     };
 
     var loadContents = function () {
-        $('#name').val('');     
-        if (isSelectedSettore > 0){
-          runQuery('settore.id in ['+isSelectedSettore+'] '+mainQuery);
-        }else{
-          runQuery(mainQuery);
-        }        
+        $('#name').val('');             
+        runQuery(mainQuery);
     };
 
     $('.form-facets').on('submit', function (e) {
@@ -239,7 +220,7 @@ $(document).ready(function () {
             filters += $(this).data('field') + ' in [' + value.join(',') + '] and ';
           }
         });
-        var searchQuery = classQuery+'subtree [' + ParentNodeId + '] and ' + filters + ' sort [name=>asc] limit ' + pageLimit + ' facets [' + facetQuery + ']';    
+        var searchQuery = classQuery+'subtree [' + ParentNodeId + '] and '+socioFilter+' ' + filters + ' sort [name=>asc] limit ' + pageLimit + ' facets [' + facetQuery + ']';    
         runQuery(searchQuery);        
         currentPage = 0;                      
         e.preventDefault();
@@ -258,3 +239,4 @@ $(document).ready(function () {
 });  
 {/literal}
 </script>
+<style type="text/css">.line-item.alt:hover a{ldelim}color:#fff !important{rdelim}</style>
