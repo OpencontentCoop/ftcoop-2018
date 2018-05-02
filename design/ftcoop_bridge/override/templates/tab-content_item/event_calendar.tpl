@@ -18,7 +18,7 @@
                               array( 'event/to_time', '>=', $today_ts ) ) ) ) }
 
 {if $upcoming_events} 
-  <div class="carousel-container owl-carousel-contained" data-items=1 data-navstyle="dots" data-autoheight="true">
+  <div class="carousel-container owl-carousel-contained" data-items={$items_per_row} data-navstyle="dots" data-autoheight="true">
     {include uri='design:atoms/owl_carousel.tpl' items=$upcoming_events i_view='grid_item'}
   </div>
 

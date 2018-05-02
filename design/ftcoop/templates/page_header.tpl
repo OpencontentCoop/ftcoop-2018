@@ -14,15 +14,23 @@
         <div class="row">
             <div class="bg-primary col-md-3 same-height">
                 <div class="branding">
-                    {if and( $subsite.node_id|ne( ezini( 'SiteSettings', 'GlobalSiteRootNodeID', 'site.ini' ) ), $subsite|has_attribute( 'image' ), $subsite.data_map.show_submenu.content|eq(1) )}
+                    {if and(
+                            $subsite.node_id|ne( ezini( 'SiteSettings', 'GlobalSiteRootNodeID', 'site.ini' ) ),
+                            $subsite|has_attribute( 'image' ),
+                            or(
+                                $subsite.data_map.show_submenu.content|eq(1),
+                                $subsite.node_id|eq( ezini( 'NodeSettings', 'RootNode', 'content.ini' ) )
+                            )
+                    )}
                         {attribute_view_gui attribute=$subsite.data_map.image
                                             alt=$root_node.name|wash
-                                            link_class='brand center-block'
-                                            css_class='img-responsive center-block'
+                                            link_class=''
+                                            image_css_class='img-responsive logo'
                                             image_class=header_logo_subsite href=$subsite.url_alias|ezurl}
                     {else}
                         <a href={"/"|ezurl()} title="vai alla home page">
-                        <img class="logo" src={"images/logo-bianco.png"|ezdesign()} alt="Cooperazione Trentina"/></a>
+                            <img class="logo" src={"images/logo-bianco.png"|ezdesign()} alt="Cooperazione Trentina"/>
+                        </a>
                     {/if}
 
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">

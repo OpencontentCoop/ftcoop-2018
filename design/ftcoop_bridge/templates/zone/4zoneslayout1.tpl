@@ -2,7 +2,7 @@
 {if is_set($has_navigation)}
     {set $add_max_width = cond($has_navigation|eq(true()), false(), true())}
 {/if}
-
+{if $add_max_width}<section>{/if}
 <div class="{if $add_max_width}max-width{/if}">
 
     <div class="row">
@@ -68,3 +68,4 @@
 
     </div>
 </div>
+{if $add_max_width}</section>{/if}

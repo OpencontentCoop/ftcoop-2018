@@ -8,12 +8,10 @@
 ))}
 {if and(is_set($is_subheader), $is_subheader|eq(true()))}
 	{set $i_view = 'owl_carousel_subheader_item'}
-	{set $wide_class = 'subheaderoverlay'}	
+	{set $wide_class = concat('subheaderoverlay', appini('SiteSettings', 'StyleSuffix', ''))}
 {/if}
 
 {if count($items)|gt(0)}
-{ezscript_require( array( 'ezjsc::jquery', 'plugins/owl-carousel/owl.carousel.min.js', "plugins/blueimp/jquery.blueimp-gallery.min.js" , "owl-carousel-activation.js" ) )}
-{ezcss_require( array( "plugins/blueimp/blueimp-gallery.css" ) )}
 
 <div id="{$items[0].name|slugize()}" class="owl-carousel owl-theme">
   {foreach $items as $item}

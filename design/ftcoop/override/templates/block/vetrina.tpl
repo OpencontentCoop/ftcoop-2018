@@ -2,7 +2,7 @@
 {if $valid_nodes}
 
 {set_defaults( hash(
-  'wide_class', 'subheaderoverlay'
+  'wide_class', concat('subheaderoverlay', appini('SiteSettings', 'StyleSuffix', ''))
 ))}
 
 

@@ -1,10 +1,9 @@
+{def $nav_tools_items = array()}
 {if $subsite|has_attribute('tools')}
-    {def $nav_tools_items = array()}
     {foreach $subsite|attribute('tools').content.relation_list as $item}
         {set $nav_tools_items = $nav_tools_items|append(fetch(content, node, hash('node_id', $item.node_id)))}
     {/foreach}
 {elseif $root_node|has_attribute('tools')}
-    {def $nav_tools_items = array()}
     {foreach $root_node|attribute('tools').content.relation_list as $item}
         {set $nav_tools_items = $nav_tools_items|append(fetch(content, node, hash('node_id', $item.node_id)))}
     {/foreach}

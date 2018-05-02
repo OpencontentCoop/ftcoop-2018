@@ -46,7 +46,7 @@
 {/if}
 
 <footer class="hidden-print">
-
+  {if ftcoop_pagedata().is_global_root}
   <div class="container">
     <div class="row">
       <div class="col-md-4">
@@ -102,4 +102,6 @@
       </div>
     </div>
   </div>
+  {/if}
 </footer>
+

@@ -1,6 +1,9 @@
-<div class="zone-layout-{$zone_layout|downcase()} norightcol">
-    <div class="row">
-        <div class="max-width">
+{def $add_max_width = true()}
+{if is_set($has_navigation)}
+    {set $add_max_width = cond($has_navigation|eq(true()), false(), true())}
+{/if}
+{if $add_max_width}<section>{/if}
+    <div class="{if $add_max_width}max-width{/if}">
             <div class="content-columns float-break">
 
                 <div class="leftcol-position">
@@ -85,9 +88,8 @@
                 </div>
 
             </div>
-        </div>
     </div>
-</div>
+    {if $add_max_width}</section>{/if}
 
 {*
     <div class="zone-layout-{$zone_layout|downcase()}">

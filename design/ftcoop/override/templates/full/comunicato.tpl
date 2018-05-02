@@ -3,8 +3,8 @@
 
 {* estrae video e immagini collegate al comunicato: figli e relazioni *}
 {def $images = array()
-$videos = array()
-$videos_classes = appini( 'ClassesSettings', 'VideoClasses', array() )
+     $videos = array()
+     $videos_classes = appini( 'ClassesSettings', 'VideoClasses', array() )
 }
 {if $node.data_map.image.has_content}
   {set $images = $images|append( $node )}
@@ -54,7 +54,7 @@ $videos_classes = appini( 'ClassesSettings', 'VideoClasses', array() )
         </div>
       {/if}
 
-      {if or($images|count()|gt(0),$node|attribute("relazioni"))}
+      {if or($images|count()|gt(0),$node|has_attribute("relazioni"))}
 
       <div class="row">
         {if $images|count()|gt(0)}

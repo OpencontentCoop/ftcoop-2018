@@ -15,7 +15,7 @@
 <div class="content-view-block block-type-mainstory block-view-single2 block-view-{$block.view}">
     {if $image}
     <div class="block-image object-center text-center">
-        {attribute_view_gui href=$valid_node.url_alias|ezurl() attribute=$image image_class=panoramic fluid=true()}
+        {attribute_view_gui href=$valid_node.url_alias|ezurl() attribute=$image image_class=imagefull fluid=true()}
     </div>
     {/if}
 </div>

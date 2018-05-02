@@ -42,7 +42,7 @@
           {$node.name|wash()}
     </h3>
     <div id="{$node.name|slugize()}">
-        {node_view_gui content_node=$node view="tab-content_item" image_class="imagefull"}          
+        {node_view_gui content_node=$node view="tab-content_item" image_class="imagefull" items_per_row=$items_per_row}
     </div>
     {delimiter}<hr />{/delimiter}
     {/foreach}

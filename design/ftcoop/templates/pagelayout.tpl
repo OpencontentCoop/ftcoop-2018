@@ -37,7 +37,6 @@
 
 </head>
 <body>
-
 {* Google Tag Manager (noscript) richiesta S. Perugini 12.12.2016 *}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P2JCRFC" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
@@ -50,9 +49,9 @@
 
     {include uri='design:page_header.tpl'}
 
-    {if and( $pagedata.website_toolbar, $pagedata.is_edit|not)}
+    {*if and( $pagedata.website_toolbar, $pagedata.is_edit|not)}
       {include uri='design:page_toolbar.tpl'}
-    {/if}
+    {/if*}
 
     {if and(ftcoop_pagedata().is_view,ftcoop_pagedata().has_subheader|not())}
         {include uri='design:page_subheader.tpl'}

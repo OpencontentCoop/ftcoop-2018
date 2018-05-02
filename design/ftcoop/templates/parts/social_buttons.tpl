@@ -1,4 +1,4 @@
-<div class="social-buttons share">
+<div class="social-buttons share" style="margin: 10px 0">
 
   <!--<script type="text/javascript" src="https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5a61f9e6f1d8c3e5"></script>-->
   <div class="addthis_toolbox">

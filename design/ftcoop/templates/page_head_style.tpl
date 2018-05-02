@@ -3,12 +3,15 @@
     {def $load_css_file_list = true()}
 {/if}
 
+{def $app_style = concat('app', appini('SiteSettings', 'StyleSuffix', ''), '.css')}
+
 {if $load_css_file_list}
     {ezcss_load( array(        
         'plugins/owl-carousel/owl.carousel.min.css',
         'plugins/owl-carousel/owl.theme.default.css',
+        'plugins/blueimp/blueimp-gallery.css',
         'fontawesome/css/fontawesome-all.css',
-        'app.css',
+        $app_style,
         ezini( 'StylesheetSettings', 'CSSFileList', 'design.ini' ),
         ezini( 'StylesheetSettings', 'FrontendCSSFileList', 'design.ini' ),
         'debug.css',
@@ -16,7 +19,7 @@
     ) )}
 {else}
     {ezcss_load( array(
-        'app.css',
+        $app_style,
         'debug.css',
         'websitetoolbar.css'
     ) )}

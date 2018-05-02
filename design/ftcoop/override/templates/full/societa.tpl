@@ -59,31 +59,6 @@
 </section>
 
 
- {*
-        <div class="row">
-
-            <div class="col-md-6">
-              <div class="panel panel-default" id="coop_info">
-
-                {if $node|has_attribute( 'image' )}
-                  <div class="panel-body">
-                      {include uri='design:atoms/image.tpl' image_class=medium caption=$node|attribute( 'caption' ) alignment=center}
-                  </div>
-                {/if}                                                    
-              </div>
-            </div>  
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                  <div class="panel-heading">
-                    <h3 class="panel-title">{if is_set($map_name[$tipo_di_settore])}{$map_name[$tipo_di_settore]}{else}Sedi{/if}</h3>
-                  </div>
-                  <div id="coop_map" style="width:100%;height:320px"></div>
-                  <div id="coop_map_list"></div>
-                </div>
-            </div>
-        </div>
-*}
-
 <section class="alt3">
   <div class="container">
     <div class="row">
@@ -203,7 +178,7 @@
 
 {* mostra comunicati e web tv legati alla società *}
 {def $filtri_comunicati = array(concat(solr_meta_subfield('relazioni','id'),':',$node.contentobject_id))
-     $filtri_web_tv = array(concat(solr_meta_subfield('persone','id'),':',$node.contentobject_id))
+     $filtri_web_tv = array(concat(solr_meta_subfield('cooperative','id'),':',$node.contentobject_id))
      $filtri_audio = array(concat(solr_meta_subfield('relazioni','id'),':',$node.contentobject_id))
      $filtri_pubblicazioni = array(concat(solr_meta_subfield('relazioni','id'),':',$node.contentobject_id))}
 

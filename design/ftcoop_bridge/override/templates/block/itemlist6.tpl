@@ -40,7 +40,7 @@
   {/if}
   {foreach $valid_nodes as $i => $valid_node}
 	{if $i|eq(0)}
-	  <div class="row">
+	  <div class="row" style="margin-bottom: 10px">
 	{/if}
 	
 	<div class="col-md-6 content-view-children">
@@ -49,7 +49,7 @@
 	
 	{if eq(sum($i,1)|mod(2),0)}
 	  </div>
-	  <div class="row">
+        <div class="row" style="margin-bottom: 10px">
 	{/if}
 	{if $i|eq($valid_nodes|count()|sub(1))}
 	  </div>

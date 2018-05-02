@@ -7,7 +7,7 @@
 {/if}
 </div>
 
-<div class="carousel-container owl-carousel-contained" data-items=1 data-navstyle="dots" data-autoheight="true">
+<div class="carousel-container owl-carousel-contained" data-items={$items_per_row} data-navstyle="dots" data-autoheight="true">
 	{include uri='design:atoms/owl_carousel.tpl' items=$children i_view='grid_item' show_number=1}
 </div>
 

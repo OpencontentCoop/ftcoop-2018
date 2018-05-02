@@ -38,7 +38,7 @@
       <h3 class="block-title">{$block.name|wash()}</h3>
     {/if}
   {/if}
-  <div class="carousel-container owl-carousel-contained" data-items=1 data-navstyle="dots">
+  <div class="carousel-container owl-carousel-contained" data-items={$items_per_row} data-navstyle="dots">
     {include uri='design:atoms/owl_carousel.tpl' items=$valid_nodes i_view='grid_item'}
   </div>
 

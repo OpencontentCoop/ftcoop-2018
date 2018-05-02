@@ -1,17 +1,3 @@
-{def $zones = $#node.data_map.page.content.zones
-     $this_zone = false()
-     $append_zone_name = ''}
-{foreach $zones as $zone}
-	{if $zone|attribute()|contains('blocks')}
-	    {foreach $zone.blocks as $b}
-	        {if $b.id|eq( $block.id )}
-	            {set $this_zone = $zone}
-	            {break}
-	        {/if}
-	    {/foreach}
-	{/if}
-{/foreach}
-
 {def $valid_nodes = $block.valid_nodes}
 
 {if $block.type|eq( 'ItemTree' )}
@@ -43,29 +29,25 @@
                                                     )|merge( $classes_hash ) )}
     {/if}
 {/if}
-{ezscript_require( array('ezjsc::jquery', 'jquery.newsticker.pack.js', 'rullo.js') )}
-{ezcss_require( array( 'blocks.css' ) )}
     
 <div class="block-type-itemlist block-view-rullo float-break">
     {if $block.name}
-    <div class="block-header">
         <h2>{$block.name|wash()} &raquo;</h2>
-    </div>
     {/if}
-    <ul class="rullo">		
+    <ul class="list-unstyled">
         {foreach $valid_nodes as $index => $_node}			
 
         {if $_node.class_identifier|eq( 'event' )}
             
-            <li{if $index|gt(0)} class="no-js-hide"{/if}>                
-                <span>{$_node.data_map.from_time.content.timestamp|l10n('shortdate')} - {$_node.data_map.to_time.content.timestamp|l10n('shortdate')} - </span>                
+            <li>
+                <span>{$_node.data_map.from_time.content.timestamp|l10n('shortdate')} - {$_node.data_map.to_time.content.timestamp|l10n('shortdate')} - </span><br />
                 <strong><a href={$_node.url_alias|ezurl()}>{$_node.name}</a></strong>
             </li>
             
         {else}
         
-            <li{if $index|gt(0)} class="no-js-hide"{/if}>
-                <span>{$_node.object.published|l10n('date')} - </span>
+            <li>
+                <span>{$_node.object.published|l10n('date')} - </span><br />
                 <strong><a href={$_node.url_alias|ezurl()}>{$_node.name}</a></strong>
             </li>
         

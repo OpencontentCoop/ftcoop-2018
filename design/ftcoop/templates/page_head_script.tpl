@@ -3,6 +3,9 @@
     'ezjsc::jquery',
     'jquery.cookie.js',
     'bootstrap/modal.js',
+    'plugins/owl-carousel/owl.carousel.min.js',
+    "plugins/blueimp/jquery.blueimp-gallery.min.js" ,
+    "owl-carousel-activation.js",
     ezini( 'JavaScriptSettings', 'JavaScriptList', 'design.ini' ),
     ezini( 'JavaScriptSettings', 'FrontendJavaScriptList', 'design.ini' )
 ))}
