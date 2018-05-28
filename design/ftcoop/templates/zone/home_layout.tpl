@@ -1,3 +1,4 @@
+{ezpagedata_set('has_breadcrumb', true())}
 {ezpagedata_set('has_subheader', true())}
 {ezpagedata_set('require_container', false())}
 {if and( is_set( $zones[0].blocks ), $zones[0].blocks|count() )}

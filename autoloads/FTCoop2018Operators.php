@@ -53,6 +53,7 @@ class FTCoop2018Operators
                         'global_root_node' => (int)eZINI::instance('site.ini')->variable('SiteSettings', 'GlobalSiteRootNodeID'),
                         'root_node' => (int)eZINI::instance('content.ini')->variable('NodeSettings', 'RootNode'),
                         'is_global_root' => false,
+                        'has_breadcrumb' => false,
                     );
 
                     $currentModuleParams = $GLOBALS['eZRequestedModuleParams'];

@@ -19,7 +19,7 @@
       {/if}
 
       {if $node|has_attribute( 'short_description' )}
-        <div class="abstract">
+        <div class="abstract clearfix">
         {attribute_view_gui attribute=$node|attribute( 'short_description' )}
         </div>
       {/if}
@@ -41,7 +41,7 @@
       {include uri='design:atoms/image.tpl' item=$node image_class=appini( 'ContentViewFull', 'DefaultImageClass', 'wide' )}
 
       {if $node|has_attribute( 'description' )}
-        <div class="description">
+        <div class="description clearfix">
           {attribute_view_gui attribute=$node|attribute( 'description' )}
         </div>
       {/if}

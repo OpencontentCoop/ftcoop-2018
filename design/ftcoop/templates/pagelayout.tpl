@@ -49,25 +49,27 @@
 
     {include uri='design:page_header.tpl'}
 
-    {*if and( $pagedata.website_toolbar, $pagedata.is_edit|not)}
+    {if and( $pagedata.website_toolbar, $pagedata.is_edit|not)}
       {include uri='design:page_toolbar.tpl'}
-    {/if*}
+    {/if}
 
     {if and(ftcoop_pagedata().is_view,ftcoop_pagedata().has_subheader|not())}
         {include uri='design:page_subheader.tpl'}
     {/if}
 {/cache-block}
-
-    {if ftcoop_pagedata().show_breadcrumb}
-        <div class="breadcrumb-container container-fluid hidden-xs">
-            <div class="row">
-                <div class="bg-primary col-md-3 same-height">
-                </div>
-                <div class="col-md-9 same-height" style="min-height: 53px;">
+    
+    {if ftcoop_pagedata().has_breadcrumb|not()}
+    <div class="breadcrumb-container container-fluid hidden-xs">
+        <div class="row">
+            <div class="bg-primary col-md-3 same-height">
+            </div>
+            <div class="col-md-9 same-height" style="min-height: 53px;">
+                {if ftcoop_pagedata().show_breadcrumb}
                     {include uri='design:breadcrumb.tpl' pagedata=ftcoop_pagedata()}
-                </div>
+                {/if}
             </div>
         </div>
+    </div>
     {/if}
 
     {if ftcoop_pagedata().require_container}

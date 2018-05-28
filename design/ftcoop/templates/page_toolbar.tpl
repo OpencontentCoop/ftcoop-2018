@@ -7,14 +7,16 @@
         </div>
     </div>    
 </div>
-{ezscript_require(array('ezjsc::jquery', 'plugins/chosen.jquery.js'))}
 <script>{literal}
     $(document).ready(function(){
         if (CurrentUserIsLoggedIn){            
             $('#toolbar').css({'position': 'fixed', 'top': 0, 'left': 0, 'z-index': 9999, 'width': '100%'}).show();
             $.get(UriPrefix+'ftc/loadwt/'+CurrentNode, function (data) {
-                if (data.length > 0){
-                    $('#toolbar').html(data).find("#ezwt-create").chosen({width:'300px'});
+                if (data.length > 0){                    
+                    $('#toolbar').html(data);
+                    if ($.fn.chosen){
+                        $('#toolbar').find("#ezwt-create").chosen({width:'300px'});
+                    }
                     var body = document.body, ezwt = document.getElementById( 'ezwt' );
                     if ( !ezwt ) return;
                     if ( body.className.indexOf('ie6') !== -1 ) return;

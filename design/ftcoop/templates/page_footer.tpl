@@ -45,7 +45,7 @@
 </section>
 {/if}
 
-<footer class="hidden-print">
+<footer class="hidden-print" {if ftcoop_pagedata().is_global_root|not()}style="background:none;padding:0"{/if}>
   {if ftcoop_pagedata().is_global_root}
   <div class="container">
     <div class="row">

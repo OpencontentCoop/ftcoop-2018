@@ -6,6 +6,7 @@
     'plugins/owl-carousel/owl.carousel.min.js',
     "plugins/blueimp/jquery.blueimp-gallery.min.js" ,
     "owl-carousel-activation.js",
+    'plugins/chosen.jquery.js',
     ezini( 'JavaScriptSettings', 'JavaScriptList', 'design.ini' ),
     ezini( 'JavaScriptSettings', 'FrontendJavaScriptList', 'design.ini' )
 ))}

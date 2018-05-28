@@ -1,5 +1,5 @@
 <!-- Path content: START -->
-<div class="container">
+<div>
     <ul class="breadcrumb">
         {foreach $pagedata.path_array as $path}
             {if and( is_set($path.node_id),

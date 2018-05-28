@@ -17,7 +17,7 @@
     <h2 class="mainstory-item-title"><a href="{$valid_node.url_alias|ezurl(no)}">{$valid_node.name|wash()}</a></h2>
     
     {if $image}
-        {attribute_view_gui href=$valid_node.url_alias|ezurl() attribute=$image image_class=imagefull fluid=true()}
+        {attribute_view_gui href=$valid_node.url_alias|ezurl() attribute=$image image_class=reference fluid=true()}
     {/if}
 	
     {if $valid_node|has_abstract()}
