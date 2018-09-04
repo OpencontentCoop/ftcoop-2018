@@ -14,7 +14,22 @@ $.ftcSocieta = {
           $row.appendTo( $table );
         }        
       });
-      $table.appendTo( $infoContainer );
+      $table.appendTo( $infoContainer );    
+    };
+
+    var renderMainInfo = function(container, info){
+      var $infoContainer = $( '#'+container );
+      $.each( info, function(index){                
+        if (typeof this.values != 'undefined' && this.values.length > 0) {                    
+          var subcontainer = $infoContainer.find('.info-'+index);                              
+          if (subcontainer.length > 0){
+            $.each(this.values, function(){              
+              subcontainer.find('ul').append('<li style="margin-left:0;padding-left:0"><a href="'+this.link+'">'+this.name+'<a></li>');  
+            });            
+            subcontainer.removeClass('hide');
+          }
+        }        
+      });
     };
     
     var renderMap = function(container, geoJson){
@@ -35,12 +50,12 @@ $.ftcSocieta = {
           if (a.layer.feature.properties.indirizzo_completo != null) {
             content += '<p><i class="fa fa-map-marker"></i> '+a.layer.feature.properties.indirizzo_completo+'</p>';
           }
-          if (a.layer.feature.properties.telefono != null) {
-            content += '<p><i class="fa fa-phone-square"></i> '+a.layer.feature.properties.telefono+'</p>';
-          }
-          if (a.layer.feature.properties.e_mail != null) {
-            content += '<p><i class="fa fa-envelope"></i> '+a.layer.feature.properties.e_mail+'</p>';
-          }
+          // if (a.layer.feature.properties.telefono != null) {
+          //   content += '<p><i class="fa fa-phone-square"></i> '+a.layer.feature.properties.telefono+'</p>';
+          // }
+          // if (a.layer.feature.properties.e_mail != null) {
+          //   content += '<p><i class="fa fa-envelope"></i> '+a.layer.feature.properties.e_mail+'</p>';
+          // }
           popup.setContent(content);
           map.openPopup(popup);
         });        
@@ -55,12 +70,12 @@ $.ftcSocieta = {
             if (this.properties.indirizzo_completo != null) {
               content += '<p><i class="fa fa-map-marker"></i> '+this.properties.indirizzo_completo+'</p>';
             }
-            if (this.properties.telefono != null) {
-              content += '<p><i class="fa fa-phone-square"></i> '+this.properties.telefono+'</p>';
-            }
-            if (this.properties.e_mail != null) {
-              content += '<p><i class="fa fa-envelope"></i> '+this.properties.e_mail+'</p>';
-            }            
+            // if (this.properties.telefono != null) {
+            //   content += '<p><i class="fa fa-phone-square"></i> '+this.properties.telefono+'</p>';
+            // }
+            // if (this.properties.e_mail != null) {
+            //   content += '<p><i class="fa fa-envelope"></i> '+this.properties.e_mail+'</p>';
+            // }            
             row.append(content);
             row.css('cursor', 'pointer').on('click', function(e){                
                 var itemClicked = $(this);
@@ -553,23 +568,24 @@ $.ftcSocieta = {
     };
     
     var renderPieChart = function(container, data){
-      var browserData = [];
-      var versionsData = [];
+      var Organi = [];
+      var Componenti = [];
       for (var i = 0; i < data.data.data.length; i++) {
+        var color = Highcharts.Color(Highcharts.theme.colors[i]);
         // add browser data
-        browserData.push({
+        Organi.push({
           name: data.data.categories[i],
           y: data.data.data[i].y,
-          color: data.data.data[i].color
+          color: color.get()
         });
         // add version data
         for (var j = 0; j < data.data.data[i].drilldown.data.length; j++) {
           var brightness = 0.2 - (j / data.data.data[i].drilldown.data.length) / 5 ;
-          versionsData.push({
+          Componenti.push({
             name: data.data.data[i].drilldown.categories[j],
             link: data.data.data[i].drilldown.links[j],
             y: data.data.data[i].drilldown.data[j],
-            color: Highcharts.Color(data.data.data[i].color).brighten(brightness).get()
+            color: color.get()
           });
         }
       }
@@ -592,7 +608,8 @@ $.ftcSocieta = {
         plotOptions: {
           pie: {
             shadow: false,
-            borderWidth: 3
+            borderWidth: 0,
+            borderColor: 'transparent'
           }
         },
         tooltip: {
@@ -622,7 +639,7 @@ $.ftcSocieta = {
         },
         series: [{
           name: 'Organi',
-          data: browserData,
+          data: Organi,
           showInLegend: true,
           size: '60%',
           dataLabels: {
@@ -634,7 +651,7 @@ $.ftcSocieta = {
           }
         }, {
           name: 'Componenti',
-          data: versionsData,
+          data: Componenti,
           innerSize: '60%',
           dataLabels: {
             formatter: function() {
@@ -673,7 +690,7 @@ $.ftcSocieta = {
     
     $.getJSON(settings.endpoint, function(response) {
       
-      renderInfo(settings.mainInfoContainer, response.info, settings.infoAttributiGenerici);
+      renderMainInfo(settings.mainInfoContainer, response.info);
       renderInfo(settings.leftInfoContainer, response.info, settings.infoAttributiRiferimenti);
       renderInfo(settings.rightInfoContainer, response.info, settings.infoAttributiAltridati);
       

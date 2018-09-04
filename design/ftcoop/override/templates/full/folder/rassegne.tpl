@@ -76,7 +76,7 @@
                   <select class="facet-select" data-placeholder="{$item.name|wash()}" name="{$item.name|wash()}" data-field="{$item.field|wash()}" data-sort="alpha" data-limit="100">
                     <option></option>
                     {if is_set($item.class)}
-                      {def $data = api_search(concat('select-fields [metadata.id as id, metadata.name as name] classes [',$item.class,'] limit 100 sort [name=>asc]'))}                    
+                      {def $data = api_search(concat('select-fields [metadata.id as id, metadata.name as name] classes [',$item.class,'] limit 100 sort [name=>asc] language \'ita-IT\''))}                    
                       {foreach $data as $facet}
                       <option class="facet-option" data-facet="{$facet.id}" value="{$facet.id}" data-name="{$facet.name|wash()}">{$facet.name|wash()}</option>
                       {/foreach}

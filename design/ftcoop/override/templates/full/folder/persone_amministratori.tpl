@@ -40,7 +40,7 @@
                 {*
                 <h3>{$facet_title}</h3>
                 {foreach $navigation as $item}
-                {def $data = api_search(concat('select-fields [metadata.id as id, metadata.name as name] classes [',$item.class,'] limit 500 sort [name=>asc]'))}                
+                {def $data = api_search(concat('select-fields [metadata.id as id, metadata.name as name] classes [',$item.class,'] limit 500 sort [name=>asc] language \'ita-IT\''))}                
                   <select class="facet-select" data-placeholder="{$item.name|wash()}" name="{$item.name|wash()}" data-field="{$item.field|wash()}" data-sort="alpha" data-limit="100" style="max-width: 1000%">
                     <option></option>                    
                     {foreach $data as $facet}                    

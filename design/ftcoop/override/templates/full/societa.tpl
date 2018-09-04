@@ -30,7 +30,7 @@
         {/if}
 
 
-        <div class="row">
+        <div class="row" id="coop_info">
 
           {include uri='design:parts/societa/main_info.tpl' container_class="col-sm-6"}
 
