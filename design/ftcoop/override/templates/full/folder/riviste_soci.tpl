@@ -203,7 +203,8 @@ $(document).ready(function () {
         var name = $('#searchfacet').val();
         var filters = '';
         if (name) {
-          filters += 'q = "' + name + '" and ';
+          var cleanName = name.trim().replace(/'/g, "\\'");
+          filters += 'q = "' + cleanName + '" and ';
           $('#searchfacetclear').show();
         }
         $('select.facet-select').each(function(){

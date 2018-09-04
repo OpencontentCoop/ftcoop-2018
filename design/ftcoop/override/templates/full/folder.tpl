@@ -46,9 +46,7 @@
         </div>
       {/if}
 
-      {if $node.object.data_map.show_children.data_int}
-        {include uri='design:parts/children.tpl' view='line'}
-      {/if}
+      {node_view_gui content_node=$node view=children view_parameters=$view_parameters}
 
     </div>
 

@@ -1,0 +1,1 @@
+{include uri='design:parts/children.tpl' view='line' view_parameters=$view_parameters}

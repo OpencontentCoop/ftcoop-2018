@@ -2,6 +2,7 @@
 
 {if count($ruoli)|gt(0)}
 <div class="box">
+	Attualmente ricopre la carica di:
 <ul class="list-unstyled">
 {foreach $ruoli as $ruolo}	
 	  <li>

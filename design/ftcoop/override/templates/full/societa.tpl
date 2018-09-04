@@ -13,7 +13,7 @@
 {def $info_name       = ezini('NomiTabSchedeSocieta', 'Info', 'ftcoop.ini')}
 {def $guida           = fetch( 'content', 'node', hash( 'node_id', ezini('NodiRilevanti', 'GuidaGrafici', 'ftcoop.ini' ) ) )}
 
-
+<div id="societa-container" data-url="{$node.url_alias|ezurl(no)}">
 <div class="container">
   <div class="content-view-full class-{$node.class_identifier} row">
 
@@ -345,3 +345,4 @@ $(document).ready(function(){
 });
 {/literal}
 </script>
+</div>

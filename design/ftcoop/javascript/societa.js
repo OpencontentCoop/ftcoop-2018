@@ -618,7 +618,7 @@ $.ftcSocieta = {
           }
         },
         legend: {
-          enabled: false,
+          enabled: true,
           layout: 'vertical',
           align: 'left',
           verticalAlign: 'top',

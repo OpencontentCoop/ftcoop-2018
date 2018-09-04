@@ -2,11 +2,9 @@
   {if $node|has_attribute( 'image' )}
   <div class="col-sm-2">
       {attribute_view_gui attribute=$node|attribute( 'image' ) 
-                          href=false() 
-                          border_size=1
-                          border_style=solid
-                          border_color='#eee'
+                          href=false()                           
                           image_class='large' 
+                          inline_style='box-shadow:0 1px 4px rgba(0,0,0,0.5);'
                           css_class="line-item-image"}
   </div>
   {/if}

@@ -1,6 +1,6 @@
-$(document).ready(function () {
+var activateOwlCarousel = function(context){
 
-    $(".owl-carousel-single .owl-carousel").owlCarousel({
+    $(".owl-carousel-single .owl-carousel", context).owlCarousel({
             'items': 1,
             'nav': true,
             'navText': ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
@@ -10,7 +10,7 @@ $(document).ready(function () {
         }
     );
 
-    $(".owl-carousel-wide .owl-carousel").owlCarousel({
+    $(".owl-carousel-wide .owl-carousel", context).owlCarousel({
             'dots': true,
             'dotsEach': 1,
             responsive: {
@@ -34,7 +34,7 @@ $(document).ready(function () {
         }
     );
 
-    $(".owl-carousel-contained").each(function () {
+    $(".owl-carousel-contained", context).each(function () {
         var dataItems = $(this).data('items');              
         var responsive = {
             0: {
@@ -81,7 +81,7 @@ $(document).ready(function () {
         });
     })
 
-    $(".owl-carousel-slider-auto .owl-carousel").owlCarousel({
+    $(".owl-carousel-slider-auto .owl-carousel", context).owlCarousel({
             'items': 1,
             'dots': true,
             'loop': true,
@@ -89,6 +89,7 @@ $(document).ready(function () {
             //onChanged: callback
         }
     );
-
-
+}
+$(document).ready(function () {
+    activateOwlCarousel();
 });

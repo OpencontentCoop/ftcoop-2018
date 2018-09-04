@@ -19,7 +19,7 @@
   </div>
 
 {def $main_title = 'Cerca'
-     $facet_title = 'Filtra ricerca per...'
+     $facet_title = 'Filtra per...'
      $navigation = array(
       hash( 'field', 'ufficio.id', 'name', 'Ufficio', 'limit', 100, 'class', 'ufficio' ),
       hash( 'field', 'servizio.id', 'name', 'Servizio', 'limit', 100, 'class', 'servizio' )
@@ -38,8 +38,8 @@
                   <input id="searchfacet" data-content="Premi invio per cercare" type="text" class="form-control" placeholder="Cerca" name="query" value="" style="width:100%;">
                   <span id="searchfacetclear" class="fa fa-times-circle" style="display:none;position: absolute;right: 5px;top: 0;bottom: 0;height: 30px;margin: auto;font-size: 30px;cursor: pointer;color: #ccc;"></span>                  
                 </div>
-                <div class="row">
-                  <div class="col-md-8">
+                {*<div class="row">
+                  <div class="col-md-8">*}
                     <h3>{$facet_title}</h3>
                     {foreach $navigation as $item}
                     {def $data = api_search(concat('select-fields [metadata.id as id, metadata.name as name] classes [',$item.class,'] limit 100 sort [name=>asc] language \'ita-IT\''))}
@@ -55,8 +55,8 @@
                       </select>
                     {undef $data}
                     {/foreach}
-                  </div>
-                  <div class="col-md-4">
+                  {*</div>*}
+                  {*<div class="col-md-4">
                     <h3>Ordina risultati per...</h3>
                     <select class="sort-select">
                       <option selected="selected" value="nome">Cognome</option>
@@ -64,7 +64,7 @@
                       <option value="servizio">Servizio</option>
                     </select>
                   </div>
-                </div>
+                </div>*}
                 <button type="submit" class="btn btn-info hide"><i class="fa fa-search"></i>Cerca</button>
               </form>
           </div>
@@ -247,7 +247,8 @@ $(document).ready(function () {
         var name = $('#searchfacet').val();
         var filters = '';
         if (name) {
-          filters += 'q = "' + name + '" and ';
+          var cleanName = name.trim().replace(/'/g, "\\'");
+          filters += 'q = "' + cleanName + '" and ';
           $('#searchfacetclear').show();
         }
         $('select.facet-select').each(function(){

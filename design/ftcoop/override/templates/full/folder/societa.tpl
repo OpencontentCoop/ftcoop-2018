@@ -1,5 +1,5 @@
 {ezpagedata_set('require_container', false())}
-<div id="facetcontainer" class="content-view-full class-{$node.class_identifier} cooperative">
+<div id="facetcontainer" class="content-view-full class-{$node.class_identifier} cooperative" data-url="{$node.url_alias|ezurl(no)}">
 
   <div class="container">
     <div class="row">
@@ -78,9 +78,9 @@
 {literal}
 <script id="tpl-results" type="text/x-jsrender">
   {{include tmpl="#tpl-pagination"/}}
-  <div class="content-view-children"> 
+  <div class="content-view-children" id="searchResults"> 
   {{for searchHits ~uriPrefix=uriPrefix}}
-  <a href="{{:~uriPrefix}}/content/view/full/{{:metadata.mainNodeId}}" title="{{:~i18n(metadata.name)}}" class="line-item alt class-{{:metadata.classIdentifier}} settore-{{:~i18n(data, 'settore')[0].remoteId}}">
+  <a href="{{:~uriPrefix}}/content/view/full/{{:metadata.mainNodeId}}" data-remote="{{:~uriPrefix}}/layout/set/modal/content/view/full/{{:metadata.mainNodeId}}" title="{{:~i18n(metadata.name)}}" class="loadRemote line-item alt class-{{:metadata.classIdentifier}}{{if ~i18n(data, 'settore')}} settore-{{:~i18n(data, 'settore')[0].remoteId}}{{else}}" style="background:#ccc{{/if}}">
     <div class="line-item-content">
       <h4 class="line-item-heading">
         {{:~i18n(metadata.name)}}
@@ -128,7 +128,19 @@
     'jquery.opendataTools.js',
     'moment-with-locales.min.js',
     'jsrender.js',
-    'plugins/chosen.jquery.js'
+    'plugins/chosen.jquery.js',
+    'plugins/highcharts/highcharts.js',
+    'plugins/highcharts/highcharts_theme.js',
+    'plugins/leaflet/leaflet.0.7.2.js',
+    'plugins/leaflet/leaflet.markercluster.js',
+    'plugins/leaflet/Leaflet.MakiMarkers.js',
+    'societa.js'
+))}
+
+{ezcss_require(array(
+  'plugins/leaflet/leaflet.0.7.2.css',
+  'plugins/leaflet/MarkerCluster.css',
+  'plugins/leaflet/MarkerCluster.Default.css'
 ))}
 
 <script type="text/javascript" language="javascript">
@@ -148,7 +160,8 @@ $(document).ready(function () {
 
     var pageLimit = 20;
     var template = $.templates('#tpl-results');
-    var $container = $('#facetcontainer .facet-content');
+    var $wrapper = $('#facetcontainer');
+    var $container = $wrapper.find('.facet-content');
 
     var facets = [];
     $('select.facet-select').each(function(){
@@ -199,15 +212,57 @@ $(document).ready(function () {
 
             $container.html(renderData);
 
+            $container.find('.loadRemote').on('click', function (e) {
+                $wrapper.css('opacity', '0.5');
+                var self = $(this);
+                $.get(self.data('remote'), function(data){
+                  var $societa = $(data).find('#societa-container');
+                    var closeButton = $('<a href="#" class="btn btn-default btn-xs pull-right">Torna ai risultati della ricerca</a>');
+                    closeButton.on('click', function(e){
+                        $('#societa-container').remove();
+                        $wrapper.show();
+                        $wrapper.css('opacity', '1');
+                        $([document.documentElement, document.body]).animate({
+                            scrollTop: $wrapper.offset().top
+                        }, 500);
+                        if (window.history.pushState) {
+                          history.pushState({}, null, $wrapper.data('url'));
+                        }
+                        e.preventDefault();
+                    });
+                    $societa.find('.class-societa').prepend(closeButton);
+                    $wrapper.before($societa);                    
+                    activateOwlCarousel($societa);
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: $societa.offset().top
+                    }, 500);
+                    $wrapper.hide();
+                    if (window.history.pushState) {
+                      history.pushState({}, null, $societa.data('url'));
+                    }
+                }).fail(function(){ 
+                    $wrapper.show();
+                    $wrapper.css('opacity', '1');
+                    alert("Errore");
+                });
+                e.preventDefault();
+            });
+
             $container.find('.nextPage').on('click', function (e) {
                 currentPage++;
                 runQuery($(this).data('query'));
+                $([document.documentElement, document.body]).animate({
+                    scrollTop: $wrapper.offset().top
+                }, 500);
                 e.preventDefault();
             });
 
             $container.find('.prevPage').on('click', function (e) {
                 currentPage--;
                 runQuery($(this).data('query'));
+                $([document.documentElement, document.body]).animate({
+                    scrollTop: $wrapper.offset().top
+                }, 500);
                 e.preventDefault();
             });
             $container.css('opacity', '1');
@@ -227,7 +282,8 @@ $(document).ready(function () {
         var name = $('#searchfacet').val();
         var filters = '';
         if (name) {
-          filters += 'q = "' + name + '" and ';
+          var cleanName = name.trim().replace(/'/g, "\\'");
+          filters += 'q = "' + cleanName + '" and ';
           $('#searchfacetclear').show();
         }
         $('select.facet-select').each(function(){
