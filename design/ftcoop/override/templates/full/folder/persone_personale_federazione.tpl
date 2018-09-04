@@ -38,23 +38,33 @@
                   <input id="searchfacet" data-content="Premi invio per cercare" type="text" class="form-control" placeholder="Cerca" name="query" value="" style="width:100%;">
                   <span id="searchfacetclear" class="fa fa-times-circle" style="display:none;position: absolute;right: 5px;top: 0;bottom: 0;height: 30px;margin: auto;font-size: 30px;cursor: pointer;color: #ccc;"></span>                  
                 </div>
-                {*
-                <h3>{$facet_title}</h3>
-                {foreach $navigation as $item}
-                {def $data = api_search(concat('select-fields [metadata.id as id, metadata.name as name] classes [',$item.class,'] limit 100 sort [name=>asc]'))}
-                  <select class="facet-select" data-placeholder="{$item.name|wash()}" name="{$item.name|wash()}" data-field="{$item.field|wash()}" data-sort="alpha" data-limit="100" style="max-width: 50%">
-                    <option></option>                    
-                    {foreach $data as $facet}                    
-                    <option class="facet-option facet-{$facet.id}" 
-                            value="{$facet.id}"                             
-                            data-name="{$facet.name|wash()}">
-                          {$facet.name|wash()}
-                    </option>
-                    {/foreach}                    
-                  </select>
-                {undef $data}
-                {/foreach}
-                *}
+                <div class="row">
+                  <div class="col-md-8">
+                    <h3>{$facet_title}</h3>
+                    {foreach $navigation as $item}
+                    {def $data = api_search(concat('select-fields [metadata.id as id, metadata.name as name] classes [',$item.class,'] limit 100 sort [name=>asc] language \'ita-IT\''))}
+                      <select class="facet-select" data-placeholder="{$item.name|wash()}" name="{$item.name|wash()}" data-field="{$item.field|wash()}" data-sort="alpha" data-limit="100" style="max-width: 50%">
+                        <option></option>                    
+                        {foreach $data as $facet}                    
+                        <option class="facet-option facet-{$facet.id}" 
+                                value="{$facet.id}"                             
+                                data-name="{$facet.name|wash()}">
+                              {$facet.name|wash()}
+                        </option>
+                        {/foreach}                    
+                      </select>
+                    {undef $data}
+                    {/foreach}
+                  </div>
+                  <div class="col-md-4">
+                    <h3>Ordina risultati per...</h3>
+                    <select class="sort-select">
+                      <option selected="selected" value="nome">Cognome</option>
+                      <option value="ufficio">Ufficio</option>
+                      <option value="servizio">Servizio</option>
+                    </select>
+                  </div>
+                </div>
                 <button type="submit" class="btn btn-info hide"><i class="fa fa-search"></i>Cerca</button>
               </form>
           </div>
@@ -78,11 +88,15 @@
 <script id="tpl-results" type="text/x-jsrender">
   {{include tmpl="#tpl-pagination"/}}
   <div class="content-view-children"> 
-  {{for searchHits ~uriPrefix=uriPrefix}}
+  {{for searchHits ~uriPrefix=uriPrefix ~sortParam=sortParam}}
   <div href="{{:~uriPrefix}}/content/view/full/{{:metadata.mainNodeId}}" title="{{:~i18n(metadata.name)}}" class="line-item alt class-{{:metadata.classIdentifier}} settore-MS_20">
     <div class="line-item-content">
       <h4 class="line-item-heading">
-        {{:~i18n(metadata.name)}}
+        {{if ~sortParam == 'nome'}}
+          {{:~i18n(data, 'cognome')}} {{:~i18n(data, 'nome')}}
+        {{else}}
+          {{:~i18n(data, 'nome')}} {{:~i18n(data, 'cognome')}}
+        {{/if}}
       </h4>
       <div class="line-item-abstract">
         <ul class="list-unstyled">
@@ -161,10 +175,19 @@ $(document).ready(function () {
       });
     });
 
+    $('select.sort-select').each(function(){
+      $(this).chosen({
+        width:'100%'
+      }).on('change', function (e) {
+        $('.form-facets').trigger('submit');
+      });
+    });
+
     var classQuery = 'classes [personale] ';
     var facetQuery = tools.buildFacetsString(facets);
     var socioFilter = 'socio_o_dipendente.id = 501451 and ';
-    var mainQuery = classQuery+'subtree [' + ParentNodeId + '] and '+socioFilter+' sort [name=>asc] limit ' + pageLimit + ' facets [' + facetQuery + ']';    
+    var sort = "sort [name=>asc]";
+    var mainQuery = classQuery+'subtree [' + ParentNodeId + '] and '+socioFilter+' '+sort+' limit ' + pageLimit + ' facets [' + facetQuery + ']';    
 
     var currentPage = 0;
     var queryPerPage = [];
@@ -176,7 +199,7 @@ $(document).ready(function () {
             response.currentPage = currentPage;
             response.prevPageQuery = jQuery.type(queryPerPage[currentPage - 1]) === "undefined" ? null : queryPerPage[currentPage - 1];
             response.uriPrefix = uriPrefix;
-
+            response.sortParam = $('select.sort-select').val() || 'nome';
             var renderData = $(template.render(response));
 
             $('.facet-option').each(function(){              
@@ -236,7 +259,15 @@ $(document).ready(function () {
             filters += $(this).data('field') + ' in [' + value.join(',') + '] and ';
           }
         });
-        var searchQuery = classQuery+'subtree [' + ParentNodeId + '] and '+socioFilter+' ' + filters + ' sort [name=>asc] limit ' + pageLimit + ' facets [' + facetQuery + ']';    
+        var sortParam = $('select.sort-select').val();
+        if (sortParam == 'nome'){
+          sort = "sort [name=>asc]";
+        }else if (sortParam == 'ufficio'){
+          sort = "sort [ufficio.name=>asc,name=>asc]";
+        }else if (sortParam == 'servizio'){
+          sort = "sort [servizio.name=>asc,name=>asc]";
+        }
+        var searchQuery = classQuery+'subtree [' + ParentNodeId + '] and '+socioFilter+' ' + filters + ' '+sort+' limit ' + pageLimit + ' facets [' + facetQuery + ']';    
         runQuery(searchQuery);        
         currentPage = 0;                      
         e.preventDefault();

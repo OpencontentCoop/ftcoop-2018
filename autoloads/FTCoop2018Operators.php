@@ -6,7 +6,10 @@ class FTCoop2018Operators
     private static $contextData;
 
     private static $operators = array(
-        'ftcoop_pagedata' => array()
+        'ftcoop_pagedata' => array(),
+        'ftcoop_incarici_persona' => array(
+            'persona' => array('type' => 'object', 'required' => true)
+        ),
     );
 
     function operatorList()
@@ -34,6 +37,46 @@ class FTCoop2018Operators
         $namedParameters
     ) {
         switch ($operatorName) {
+            
+            case 'ftcoop_incarici_persona':
+                $persona = $namedParameters['persona'];                
+                $data = array();
+                if($persona instanceof eZContentObject){
+                    $ftcoopIni = eZINI::instance('ftcoop.ini');
+                    $hiddenTypes = array();
+                    if ($ftcoopIni->hasVariable('RuoliSettings', 'NascondiTipologiaId')){
+                        $hiddenTypes = (array)$ftcoopIni->variable('RuoliSettings', 'NascondiTipologiaId');
+                    }
+                    $oggettiRilevantiFederazione = $ftcoopIni->variable('OggettiRilevanti', 'Federazione');
+                    $rolesData = eZContentFunctionCollection::fetchReverseRelatedObjects( 
+                        $persona->attribute('id'), 
+                        'ruolo/persona', 
+                        false, false, 
+                        array('published', 'asc'), false
+                    );
+                    if (isset($rolesData['result'])){
+                        foreach ($rolesData['result'] as $index => $role) {
+                            $dataMap = $role->dataMap();
+                            $tipologiaIdList = array();
+                            $societaIdList = array();
+                            $nomina = $dataMap['nomina']->toString() + $index;
+                            if (isset($dataMap['tipologia_di_ruolo']) && $dataMap['tipologia_di_ruolo']->hasContent()){
+                                $tipologiaIdList = explode('-', $dataMap['tipologia_di_ruolo']->toString());
+                            }
+                            if (isset($dataMap['societa']) && $dataMap['societa']->hasContent()){
+                                $societaIdList = explode('-', $dataMap['societa']->toString());                                
+                            }
+                            $intersect = array_intersect($hiddenTypes, $tipologiaIdList);                            
+                            if (empty($intersect) && $role->canRead() && !in_array($oggettiRilevantiFederazione, $societaIdList)){
+                                $data[$nomina] = $role;
+                            }
+                        }
+                        ksort($data);
+                    }
+                }
+                $operatorValue = $data;
+            break;
+
             case 'ftcoop_pagedata':
 
                 if (self::$contextData === null) {

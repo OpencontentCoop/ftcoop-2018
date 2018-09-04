@@ -17,11 +17,7 @@
           {attribute_view_gui attribute=$node|attribute( 'abstract' )}
         </div>
       {/if}
-
     
-      {def $societa_ids = array()} {* variabile calcolata dal tpl incluso incarichi.tpl*}
-      {include uri="design:parts/persona/incarichi.tpl" node=$node}
-
       <div class="row">
 	  
 	  {if $node|has_attribute( 'image' )}
@@ -81,6 +77,8 @@
               {attribute_view_gui attribute=$node.data_map.competenze}
             </div>
         {/if}        
+
+        {include uri="design:parts/persona/incarichi.tpl" node=$node}
 		
 	  </div>
 	</div>

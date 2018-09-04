@@ -1,7 +1,13 @@
 <div class="content-view-line line-item class-{$node.class_identifier} row">
   {if $node|has_attribute( 'image' )}
   <div class="col-sm-2">
-      {attribute_view_gui attribute=$node|attribute( 'image' ) href=false() image_class='large' css_class="line-item-image"}
+      {attribute_view_gui attribute=$node|attribute( 'image' ) 
+                          href=false() 
+                          border_size=1
+                          border_style=solid
+                          border_color='#eee'
+                          image_class='large' 
+                          css_class="line-item-image"}
   </div>
   {/if}
   <div class="line-item-content col-sm-{if $node|has_attribute( 'image' )}10{else}12{/if}">
