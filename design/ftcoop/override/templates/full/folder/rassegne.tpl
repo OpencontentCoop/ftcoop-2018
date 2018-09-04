@@ -10,7 +10,15 @@
         <div class="page-header">
           <h1>{$node.name|wash()}</h1>
         </div>
-        <div class="clearfix">          
+
+        {if $node|has_attribute( 'short_description' )}
+          <div class="abstract well">
+              {attribute_view_gui attribute=$node|attribute( 'short_description' )}
+          </div>
+        {/if}
+
+
+          <div class="clearfix">
           {foreach fetch_alias( 'children', hash( 'parent_node_id', ezini('RassegnaStampa', 'RassegnaSpecialeParentNodeID', 'ftcoop.ini'),
                               'sort_by', $node.sort_array,
                               'class_filter_type', 'include',

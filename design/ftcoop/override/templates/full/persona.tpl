@@ -62,7 +62,7 @@
               <dt>{$node.data_map.fax.contentclass_attribute_name}</dt>
               <dd>{attribute_view_gui attribute=$node.data_map.fax}</dd>
         {/if}
-		    {if $node.object.data_map.servizio.has_content}
+        {if $node.object.data_map.servizio.has_content}
               <dt>{$node.data_map.servizio.contentclass_attribute_name}</dt>
               <dd>{attribute_view_gui attribute=$node.data_map.servizio}</dd>
         {/if}

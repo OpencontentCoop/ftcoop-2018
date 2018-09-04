@@ -32,6 +32,7 @@
 	{if not($hidden_roles_array|contains($ruolo.data_map.tipologia_di_ruolo.content.relation_list[0].contentobject_id))}
 	{if $ruolo.can_read}
     <p>
+	{if $ruolo.section_id|eq(16)}<strike>{/if}
 	  <strong>{$ruolo.name}</strong>
 	  {if $ruolo.data_map.nomina.has_content}
 	  <small>Nomina del {attribute_view_gui attribute=$ruolo.data_map.nomina}</small>
@@ -47,6 +48,7 @@
 		  {/if}
 		  {/foreach}
 	  {/if}
+	{if $ruolo.section_id|eq(16)}</strike>{/if}
 	</p>
 	{/if}
 {/if}

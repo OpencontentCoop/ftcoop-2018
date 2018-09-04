@@ -12,10 +12,11 @@
   Cliccando sul testo in blu, potete accedervi direttamente, dopo aver inserito le vostre credenziali.
 </p>
 
-<p>Eventuali osservazioni sul contenuto del verbale potranno essere comunicate a: roberta.girardini@ftcoop.it (0461-898.608).</p>
-<p>In caso di necessità tecniche, potete contattare:sara.perugini@ftcoop.it (0461-898.614).</p>
+<p>Eventuali osservazioni sul contenuto del verbale potranno essere comunicate a: vincenzo.visetti@ftcoop.it (0461-898.606).</p>
+<p>In caso di necessità tecniche, potete contattare: sara.perugini@ftcoop.it (0461-898.614).</p>
 
 <p>Con i più cordiali saluti.</p>
 
-<p><em>Mauro Fezzi</em> - presidente</p>
+<p><em>Marina Mattarei</em> - presidente</p>
+
 
