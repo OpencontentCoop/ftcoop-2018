@@ -32,13 +32,11 @@
     {include uri='design:page_head_script.tpl'}
     {/debug-accumulator}
 
-    {* Google Tag Manager richiesta S. Perugini 12.12.2016 *}
-    <script>{literal}(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-P2JCRFC');{/literal}</script>
+    {include uri='design:page_head_tag_manager.tpl'}
 
 </head>
 <body>
-{* Google Tag Manager (noscript) richiesta S. Perugini 12.12.2016 *}
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P2JCRFC" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+{include uri='design:page_body_tag_manager.tpl'}
 
 <div id="page">
 

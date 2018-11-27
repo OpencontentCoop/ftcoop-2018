@@ -1,0 +1,2 @@
+{* Google Tag Manager (noscript) richiesta S. Perugini 12.12.2016 *}
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P2JCRFC" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>

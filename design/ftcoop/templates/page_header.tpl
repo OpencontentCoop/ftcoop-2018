@@ -1,20 +1,12 @@
 {def $root_node = fetch( 'content', 'node', hash( 'node_id', $pagedata.root_node ) )}
-{*
-<header>
-  <div class="container">
-    <div class="row">
-      {include uri='design:page_header_links.tpl'}
-    </div>
-  </div>
-</header>
-*}
 <header>
 
     <div class="container-fluid">
         <div class="row">
-            <div class="bg-primary col-md-3 same-height">
+            <div class="bg-primary col-md-3 same-height header-branding">
                 <div class="branding">
                     {if and(
+                            $subsite,
                             $subsite.node_id|ne( ezini( 'SiteSettings', 'GlobalSiteRootNodeID', 'site.ini' ) ),
                             $subsite|has_attribute( 'image' ),
                             or(
@@ -68,7 +60,7 @@
 
                 </div>
             </div>
-            <div class="col-md-9 same-height" style="min-height: 0;">
+            <div class="col-md-9 same-height header-nav" style="min-height: 0;">
 
                 {if $pagedata.is_edit|not}
                     {include uri='design:nav/nav-tools.tpl'}

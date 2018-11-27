@@ -1,5 +1,8 @@
 <?php /*
 
+[SiteSettings]
+GlobalSiteRootNodeID=2
+
 [TemplateSettings]
 ExtensionAutoloadPath[]=ftcoop-2018
 
