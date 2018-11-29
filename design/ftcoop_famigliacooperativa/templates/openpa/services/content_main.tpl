@@ -6,8 +6,8 @@
       {/if}
     </div>
     {if is_set( $openpa.content_main.parts.image )}
-      <div class="text-center">
-        {include uri='design:atoms/image.tpl' item=$node image_class=imagefullwide css_classes="main_image" image_css_class="media-object tr_all_long_hover"}
+      <div style="margin-bottom: 30px">
+        {include uri='design:atoms/image.tpl' item=$node image_class=imagefullwide css_classes="" image_css_class="center-block"}
       </div>
     {/if}    
     {if is_set( $openpa.content_main.parts.full_text )}

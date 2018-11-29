@@ -184,8 +184,8 @@ class FTCoop2018Operators
                     eZURI::transformURI($uriPrefix);
                     $data['uri_prefix'] = rtrim($uriPrefix, '/') . '/';
 
-
                     self::$contextData = $data;
+                    eZDebug::appendBottomReport('Pagedata', array('FTCoop2018Operators', 'printDebugReport'));
                 }
 
                 return $operatorValue = self::$contextData;
@@ -194,6 +194,26 @@ class FTCoop2018Operators
         }
 
         return null;
+    }
+
+    public static function printDebugReport($as_html = true)
+    {
+        if (!eZTemplate::isTemplatesUsageStatisticsEnabled())
+            return '';
+
+        $stats = '';
+        if ($as_html) {
+            $stats .= '<h3>Pagedata:</h3>';
+            $stats .= '<table id="ftcooppagedata" class="debug_resource_usage">';
+            ksort(self::$contextData);
+            foreach (self::$contextData as $key => $data) {
+                $value = json_encode($data);
+                $stats .= "<tr class='data'><td><strong>{$key}</strong></td><td>{$value}</td></tr>";
+            }
+            $stats .= '</table>';            
+        }
+
+        return $stats;
     }
 
     private static function getSubSiteNodeListCache()

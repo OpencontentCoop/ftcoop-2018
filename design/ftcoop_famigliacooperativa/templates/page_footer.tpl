@@ -3,7 +3,7 @@
   
   <div class="container">
     <div class="row">
-      <div class="col-md-5 col-md-offset-1">
+      <div class="col-md-{if ftcoop_pagedata().require_container}6{else}4 col-md-offset-1{/if}">
         <img class="footer-logo" src={"images/logo-blu.png"|ezdesign()} class="img-responsive"  alt="" title="" />
         {def $footer_notes = fetch( 'openpa', 'footer_notes' )}
         {if $footer_notes}
@@ -74,7 +74,7 @@
       <div class="col-md-6">
         <div id="footer-map" 
              data-geo="{'/openpa/data/map_markers'|ezurl(no)}?parentNode=2&classIdentifiers=punto_vendita&contentType=geojson" 
-             style="width: 100%; height: 380px; box-shadow: 0 5px 60px -5px rgba(0, 0, 0, 0.8);">          
+             style="width: 100%; height: 450px; box-shadow: 0 5px 60px -5px rgba(0, 0, 0, 0.8);">          
         </div>
       <script>
         {literal}        
@@ -86,7 +86,7 @@
         $.getJSON($('#footer-map').data('geo'), function(json) {
           var geoJSONLayer = L.geoJson(json, {
               pointToLayer: function(feature, latlng) {
-                var customIcon = L.MakiMarkers.icon({icon: "circle", color: '#003C86'});
+                var customIcon = L.MakiMarkers.icon({icon: "grocery", color: '#003C86'});
                 return new L.Marker(latlng,  {icon: customIcon});
               },
               onEachFeature: function(feature, layer) {
@@ -107,7 +107,7 @@
         });
         {/literal}
         {if and($pagedata.contacts.latitudine|ne(''), $pagedata.contacts.longitudine|ne('') )}
-          featureGroup.addLayer(new L.Marker([{$pagedata.contacts.latitudine}, {$pagedata.contacts.longitudine}], {ldelim}icon: L.MakiMarkers.icon({ldelim}icon: "star", size: "l", color: '#FF0000'{rdelim}){rdelim}));
+          featureGroup.addLayer(new L.Marker([{$pagedata.contacts.latitudine}, {$pagedata.contacts.longitudine}], {ldelim}icon: L.MakiMarkers.icon({ldelim}icon: "commercial", size: "l", color: '#FF0000'{rdelim}){rdelim}));
           map.fitBounds(featureGroup.getBounds());
         {/if}        
       </script>

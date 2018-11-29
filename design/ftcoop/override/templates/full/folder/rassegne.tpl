@@ -324,3 +324,5 @@ $(document).ready(function () {
 });  
 {/literal}
 </script>
+
+{include uri='design:parts/load_website_toolbar.tpl'}

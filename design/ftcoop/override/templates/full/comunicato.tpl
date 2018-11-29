@@ -265,3 +265,4 @@ title="Ti può interessare anche..."}
         {attribute_view_gui attribute=$node|attribute( 'comments' )}
       </div>
     {/if*}
+{include uri='design:parts/load_website_toolbar.tpl'}

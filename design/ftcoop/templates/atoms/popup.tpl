@@ -1,4 +1,4 @@
-{if $pagedata.node_id|eq(2)}
+{if and($pagedata.node_id|eq(2), is_set(api_class('popup').identifier))}
 
     {def $now = currentdate()|datetime( 'custom' , '%cZ' )
          $search_popup = fetch(ezfind, search, hash(

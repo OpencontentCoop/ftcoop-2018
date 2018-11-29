@@ -49,3 +49,5 @@
     {*include uri='design:parts/content-related.tpl'*}
 
 </div>
+
+{include uri='design:parts/load_website_toolbar.tpl'}

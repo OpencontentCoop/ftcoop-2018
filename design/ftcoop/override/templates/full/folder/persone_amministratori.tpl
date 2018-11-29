@@ -241,3 +241,4 @@ $(document).ready(function () {
 {/literal}
 </script>
 <style type="text/css">.line-item.alt:hover a{ldelim}color:#fff !important{rdelim}</style>
+{include uri='design:parts/load_website_toolbar.tpl'}

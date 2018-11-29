@@ -13,8 +13,7 @@
     {set $extra_cache_key = concat($extra_cache_key, ftcoop_pagedata().topmenu_template_uri)}
     {set $extra_cache_key = concat($extra_cache_key, ftcoop_pagedata().has_subheader)}
     {set $extra_cache_key = concat($extra_cache_key, ftcoop_pagedata().is_view)}
-
-    {debug-log var=ftcoop_pagedata() msg='ftcoop_pagedata'}
+    
     {debug-log var=$extra_cache_key msg='extra_cache_key'}
 
     <!-- Site: {ezsys( 'hostname' )} -->
@@ -40,16 +39,16 @@
 
 <div id="page">
 
+{debug-accumulator id=page_toolbar name=page_toolbar}
+    {include uri='design:page_toolbar.tpl'}
+{/debug-accumulator}
+
 {cache-block ignore_content_expiry keys=array( $access_type.name, $extra_cache_key )}
     {def $pagedata = ezpagedata()}
     {def $subsite = subsite()}
     {def $current_node_id = $pagedata.node_id}
 
     {include uri='design:page_header.tpl'}
-
-    {if and( $pagedata.website_toolbar, $pagedata.is_edit|not)}
-      {include uri='design:page_toolbar.tpl'}
-    {/if}
 
     {if and(ftcoop_pagedata().is_view,ftcoop_pagedata().has_subheader|not())}
         {include uri='design:page_subheader.tpl'}

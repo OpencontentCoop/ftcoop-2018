@@ -8,9 +8,6 @@
 <div class="container">
   <div class="content-view-full class-{$node.class_identifier} row">
   
-  {* Per il menu di sinistra scommenta e togli "wide" dal content-main *}
-  {*include uri='design:nav/nav-section.tpl'*}
-
   <div class="content-main wide">
 
     <div class="page-header">
@@ -27,12 +24,8 @@
 
     {include uri=$openpa.control_children.template}
 	
-	
   </div>
-  
-  {* Per visualizzare l'extrainfo: aggiungi la classe "full-stack" al primo div e scommenta la seguenta inclusione *}
-  {*include uri='design:parts/content-related.tpl'*}
-  
+    
 </div>
 </div>
 

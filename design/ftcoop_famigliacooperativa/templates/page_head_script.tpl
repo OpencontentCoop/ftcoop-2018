@@ -30,7 +30,12 @@
     ocmp('controls','js'),
     ocmp('playlist','js'),
     'plugins/owl-carousel/owl.carousel.min.js',
+    'plugins/init_carousel.js',
     "plugins/blueimp/jquery.blueimp-gallery.min.js",
+    'jquery.opendataSearchView.js',
+    'jquery.opendataSearchViewFilterFactory.js',
+    'jsrender.js',
+    "famiglia_cooperativa.js"
 ))}
 
 <!--[if lt IE 9]>
