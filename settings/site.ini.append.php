@@ -19,4 +19,7 @@ tags[]=content
 tags[]=timeline
 path=timeline
 
+[RoleSettings]
+PolicyOmitList[]=image/view
+
 */ ?>

@@ -1,5 +1,13 @@
-var FilterFactory = function(queryField, containerSelector, facetSort, facetLimit){
+var FilterFactory = function(label, queryField, containerSelector, facetSort, facetLimit){
     return {
+
+        label: label,
+
+        showSpinner: false,
+        
+        showCount: false,
+        
+        multiple: true,
 
         current: ['all'],
 
@@ -19,8 +27,32 @@ var FilterFactory = function(queryField, containerSelector, facetSort, facetLimi
         },
 
         filterClickEvent: function (e, view) {
-            var current = $(e.currentTarget);
-            this.setCurrent(current.data('value'));
+            var selectedValue = [];
+            var selected = $(e.currentTarget);
+            if (selected.data('value') != 'all'){
+                var selectedWrapper = selected.parent();            
+                if (this.multiple){                                
+                    if (selectedWrapper.hasClass('active')){
+                        selectedWrapper.removeClass('active');   
+                    }else{
+                        selectedWrapper.addClass('active');   
+                    }
+                    $('li.active', $(this.container)).each(function(){
+                        var value = $(this).find('a').data('value');
+                        if (value != 'all'){
+                            selectedValue.push(value);
+                        }
+                    });  
+                }else{
+                    $('li', $(this.container)).removeClass('active');
+                    selectedWrapper.addClass('active');
+                    selectedValue = [selected.data('value')];
+                }
+                if (this.showSpinner){
+                    selected.parents('div.filter-wrapper').find('.widget_title a').append('<span class="loading pull-right"> <i class="fa fa-circle-notch fa-spin"></i></span>');
+                }
+            }
+            this.setCurrent(selectedValue);
             view.doSearch();
             e.preventDefault();
         },
@@ -31,12 +63,8 @@ var FilterFactory = function(queryField, containerSelector, facetSort, facetLimi
             });
         },
 
-        setCurrent: function (value) {
-            $('li', $(this.container)).removeClass('active');
-            $('li a[data-value="' + value + '"]', $(this.container))
-                .parent().addClass('active')
-                .parents('div.widget').prev().append('<span class="loading"> <i class="fa fa-circle-o-notch fa-spin"></i></span>');
-            this.current = [value];
+        setCurrent: function (value) {            
+            this.current = value;
         },
 
         getCurrent: function () {
@@ -45,16 +73,16 @@ var FilterFactory = function(queryField, containerSelector, facetSort, facetLimi
 
         refresh: function (response, view) {
             var self = this;
-            $('span.loading').remove();
-            //$('li', $(self.container)).hide();
-            //$('li a[data-value="all"]', $(self.container)).parent().show();
+            if (self.showSpinner){
+                $('span.loading').remove();
+            }
 
             var current = self.getCurrent();
             var currentLength = 0;
             $.each(current, function () {
                 if (this != 'all') {
-                    var item = $('a[data-value="' + this + '"]', $(self.container));
-                    item.html(this).parent().addClass('active');//.show();
+                    var item = $(self.container).find('a[data-value="' + this + '"]');
+                    item.html(item.data('name')).data('count', 0);
                     currentLength++;
                 }
             });
@@ -69,25 +97,37 @@ var FilterFactory = function(queryField, containerSelector, facetSort, facetLimi
                 if (this.name == self.name) {
                     $.each(this.data, function (value, count) {
                         if (value != '') {
-                            var quotedValue = value;
-                            if ($('li a[data-value="' + quotedValue + '"]', $(self.container)).length) {
-                                $('li a[data-value="' + quotedValue + '"]', $(self.container)).html(value + ' (' + count + ')');//.parent().show();
+                            var quotedValue = self.quoteValue(value);
+                            
+                            var item = $('li a[data-value="' + value + '"]', $(self.container));                                                    
+                            if (item.length) {
+                                var nameText = item.data('name');
+                                if (self.showCount){
+                                    nameText += ' (' + count + ')';
+                                }
+                                item.html(nameText)
+                                    .data('count', count);
                             } else {
-                                var li = $('<li><a href="#" data-filter_identifier="' + $(self.container).data('filter') + '" data-count="' + count + '" data-name="' + value + '" data-value="' + quotedValue + '">' + value + ' (' + count + ')' + '</a></li>');
-                                li.find('a').on('click', function (e) {
-                                    self.filterClickEvent(e, view);
-                                });
+                                var li = $('<li></li>');
+                                var a = $('<a href="#" data-name="' + value + '" data-value="' + quotedValue + '"></a>')
+                                    .data('count', count)                                    
+                                    .on('click', function(e){self.filterClickEvent(e,view)});   
+                                var nameText = value;
+                                if (self.showCount){
+                                    nameText += ' (' + count + ')';
+                                }
+                                a.html(nameText).appendTo(li);
                                 $(self.container).append(li);
-                            }
-                            //$(self.container).parent().show();
+                            }                            
                         }
                     });
                 }
-            })).then(function(){
-                if( $(self.container).find('li:visible').length < 2 && currentLength == 0){
-                    //$(self.container).parent().hide();
-                }
+            })).then(function(){                
             });
+        },
+
+        quoteValue: function(value){
+            return value;
         },
 
         reset: function (view) {
@@ -101,71 +141,113 @@ var FilterFactory = function(queryField, containerSelector, facetSort, facetLimi
     }
 };
 
-var TagFilterFactory = function(queryField, containerSelector, tagRoot, facetSort, facetLimit){
+var TagFilterFactory = function(label, queryField, containerSelector, tagRoot, facetSort, facetLimit){    
     return {
+        
+        label: label,
+
+        showSpinner: false,
+        
+        showCount: false,
+        
+        multiple: true,
+        
         name: queryField,
+        
         container: containerSelector,
+        
         current: ['all'],
-        filterClickEvent: function (e, view) {
-            var current = $(e.currentTarget);
-            this.setCurrent(current.data('value'));
+        
+        filterClickEvent: function (e, view) {            
+            var selectedValue = [];
+            var selected = $(e.currentTarget);
+            if (selected.data('value') != 'all'){
+                var selectedWrapper = selected.parent();            
+                if (this.multiple){                                
+                    if (selectedWrapper.hasClass('active')){
+                        selectedWrapper.removeClass('active');   
+                    }else{
+                        selectedWrapper.addClass('active');   
+                    }
+                    $('li.active', $(this.container)).each(function(){
+                        var value = $(this).find('a').data('value');
+                        if (value != 'all'){
+                            selectedValue.push(value);
+                        }
+                    });  
+                }else{
+                    $('li', $(this.container)).removeClass('active');
+                    selectedWrapper.addClass('active');
+                    selectedValue = [selected.data('value')];
+                }
+                if (this.showSpinner){
+                    selected.parents('div.filter-wrapper').find('.widget_title a').append('<span class="loading pull-right"> <i class="fa fa-circle-notch fa-spin"></i></span>');
+                }
+            }
+            this.setCurrent(selectedValue);
             view.doSearch();
             e.preventDefault();
         },
-        renderTagTree: function (tag, container, filter) {
-            var li = $('<li><a href="#" data-value="' + tag.id + '" data-name="' + tag.keyword + '">' + tag.keyword + '</a></li>');
+        
+        renderTagTree: function (tag, container, filter, view) {
+            var mainContainer = $(filter.container);
+            var li = $('<li></li>');
+            $('<a href="#" data-value="' + tag.id + '" data-name="' + tag.keyword + '">' + tag.keyword + '</a>')                
+                .on('click', function(e){filter.filterClickEvent(e,view)})
+                .appendTo(li);
             //li.hide();
             if (tag.hasChildren) {
                 var childContainer = $('<ul class="nav nav-pills nav-stacked" style="padding-left:20px"></ul>');
                 $.each(tag.children, function() {
                     var childTag = this;
-                    filter.renderTagTree(childTag, childContainer, filter);
+                    filter.renderTagTree(childTag, childContainer, filter, view);
                 });
                 li.append(childContainer);
             }
             container.append(li);
         },
+        
         init: function (view, filter) {
             var container = $(filter.container);
             $.opendataTools.tagsTree(tagRoot, function (response) {
                 $.each(response.children, function () {
-                    filter.renderTagTree(this, container, filter);
-                });
-                $(filter.container).find('a').on('click', function(e){filter.filterClickEvent(e,view)});
+                    filter.renderTagTree(this, container, filter, view);
+                });                
             });
+            $(filter.container).find('a[data-value="all"]').on('click', function(e){filter.filterClickEvent(e,view)});
         },
-        setCurrent: function (value) {
-            $('li', $(this.container)).removeClass('active');
-            $('li a[data-value="'+value+'"]', $(this.container))
-                .parent().addClass('active')
-                .parents('div.widget').prev().append('<span class="loading"> <i class="fa fa-circle-o-notch fa-spin"></i></span>');
-            this.current = [value];
+        
+        setCurrent: function (value) {            
+            this.current = value;
         },
+        
         getCurrent: function () {
             return this.current;
         },
+        
         buildQuery: function () {
-            var currentValues = this.getCurrent();
+            var currentValues = this.getCurrent();            
             if (currentValues.length && jQuery.inArray( 'all', currentValues ) == -1) {
                 return queryField + ' in [\'' + currentValues.join("','") + '\']';
             }
         },
+        
         buildQueryFacet: function(){
             return queryField+'|'+facetSort+'|'+facetLimit;
         },
+        
         refresh: function (response, view) {
             var self = this;
-            $('span.loading').remove();
-
-            //$(self.container).find('li').hide();
-            //$(self.container).find('li a[data-value="all"]').parent().show();
+            if (self.showSpinner){
+                $('span.loading').remove();
+            }
 
             var current = self.getCurrent();
             var currentLength = 0;
             $.each(current, function () {
                 if (this != 'all') {
                     var item = $(self.container).find('a[data-value="' + this + '"]');
-                    item.html(item.data('name')).data('count', 0).parent().addClass('active'); //.show().parents('li').show();
+                    item.html(item.data('name')).data('count', 0);
                     currentLength++;
                 }
             });
@@ -178,18 +260,22 @@ var TagFilterFactory = function(queryField, containerSelector, tagRoot, facetSor
                         $(this).html(name);
                     });
                     $.each(this.data, function (value, count) {
-                        var item = $('li a[data-value="' + value + '"]', $(self.container));
-                        var name = item.data('name');
-                        item.html(name + ' (' + count + ')').data('count', count).data('filter_identifier', $(self.container).data('filter'));//.parent().show();                            
-                        //$(self.container).parent().show();
+                        var item = $('li a[data-value="' + self.quoteValue(value) + '"]', $(self.container));                        
+                        var nameText = item.data('name');
+                        if (self.showCount){
+                            nameText += ' (' + count + ')';
+                        }
+                        item.html(nameText)
+                            .data('count', count);
                     });
                 }
             });
-            if( $(self.container).find('li:visible').length < 2 && currentLength == 0){
-                //$(self.container).parent().hide();
-            }
-
         },
+
+        quoteValue: function(value){
+            return value;
+        },
+        
         reset: function (view) {
             var self = this;
             $(self.container).find('li').removeClass('active');
