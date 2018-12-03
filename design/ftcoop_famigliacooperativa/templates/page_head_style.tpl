@@ -24,7 +24,8 @@
         'fuelux.css',
         ezini( 'StylesheetSettings', 'CSSFileList', 'design.ini' ),
         ezini( 'StylesheetSettings', 'FrontendCSSFileList', 'design.ini' ),
-        'famiglia_cooperativa.css'
+        'famiglia_cooperativa.css',
+        'facet_search.css'
     ),
     'all', 'text/css', 'stylesheet' )}
 {else}
@@ -44,7 +45,8 @@
         'controls-audio.css',
         'dataTables.bootstrap.css',
         'fuelux.css',
-        'famiglia_cooperativa.css'
+        'famiglia_cooperativa.css',
+        'facet_search.css'
     ),
     'all', 'text/css', 'stylesheet' )}
 {/if}

@@ -1,0 +1,116 @@
+@media (min-width: 768px) {
+    .facet-search .widget{
+        margin-bottom: 30px;        
+        position: absolute;
+        z-index: 10;
+        background: #fff;
+        right: 15px;
+        left: 15px;
+        padding: 0
+    }
+    .facet-search .widget > ul{
+        max-height: 270px;
+        overflow-y: auto;
+    }
+    /*.facet-search .widget li.remove-filter{
+        position: absolute;
+        width: 100%;
+        bottom: -48px;
+        left: 0
+    }*/    
+    .facet-search .current-xs-filters,
+    .facet-search .open-xs-filter,
+    .facet-search .close-xs-filter{
+        display: none !important;
+    }
+    .facet-search .filters-wrapper{
+        margin-bottom: 20px
+    }
+}
+
+.facet-search .widget li a[data-value="all"]{
+    display: block;
+    background: #0DB5EB;
+    color: #fff;
+}
+.facet-search .widget li.active a[data-value="all"]{
+    display: none;        
+}
+
+.facet-search .widget_title{
+    margin: 20px 0 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc
+}
+.facet-search .widget_title a{
+    display: block;
+    text-decoration: none;
+}
+.facet-search .widget_title a:focus{
+    outline: none;
+}
+.facet-search .widget_title a i {
+    padding-right: 10px
+}
+
+.facet-search .current-filters-wrapper{
+    margin: 0 0 20px
+}
+
+.facet-search .nav-pills li a.text-muted {
+    color: #cccccc !important;
+}
+
+@media (max-width: 767px) {
+    .facet-search .filters-wrapper-xs{
+        position: fixed;
+        z-index: 10;
+        background: #fff;
+        padding: 10px 20px;
+        top: 0;
+        bottom: 40px;
+        left: 0;
+        right: 0;      
+        opacity: .95;
+    }
+    .facet-search .filters-wrapper-xs .filter-wrapper.active h4.widget_title{
+        position: fixed;
+        width: 100%;
+        left: 0;
+        padding: 20px;
+        background: #fff;
+        z-index: 12;
+        top: 0;
+        margin: 0;
+    }
+    .facet-search .filters-wrapper-xs .filter-wrapper.active{
+        height: 100%;
+        overflow-y: hidden;
+    }
+    .facet-search .filters-wrapper-xs .filter-wrapper.active .widget{
+        height: auto;
+        position: absolute;
+        top: 77px;
+        width: 100%;
+        left: 0;
+        bottom: 0px;
+        overflow-y: auto;    
+    }
+    .facet-search .filters-wrapper-xs.has-active .filter-wrapper.unactive{
+        display: none;
+    }
+    .facet-search .open-xs-filter{
+        margin-bottom: 20px;
+        border-radius: 0;
+    }
+    .facet-search .close-xs-filter{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        border-radius: 0;
+    }
+    .facet-search .current-xs-filters{
+    	font-size: .7em;
+    	margin: 10px 0 0;
+    }
+}

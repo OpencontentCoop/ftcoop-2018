@@ -33,7 +33,7 @@
     'plugins/init_carousel.js',
     "plugins/blueimp/jquery.blueimp-gallery.min.js",
     'jquery.opendataSearchView.js',
-    'jquery.opendataSearchViewFilterFactory.js',
+    'facet_search.js',
     'jsrender.js',
     "famiglia_cooperativa.js"
 ))}

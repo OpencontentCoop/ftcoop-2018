@@ -1,3 +1,14 @@
+.branding a img.logo{
+  margin-top: 10px;
+  margin-bottom: 0
+}
+.branding a small{
+  display: block;
+  color: #fff;
+  font-size: 1.1em;
+  white-space: nowrap;
+  margin-bottom: 10px
+}
 .u-background-grey-20{
   background: #eee;
 }
