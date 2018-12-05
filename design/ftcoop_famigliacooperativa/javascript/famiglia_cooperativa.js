@@ -55,7 +55,7 @@ moment.locale('it', {
 $(document).ready(function(){	
 	var calcolaOrario = function(){
 		$("[data-orario]").each(function() {
-			var table = $(this);
+			var table = $(this);			
 			var now = moment();
 			
 			var currentWeekDay = now.day();			
@@ -114,10 +114,12 @@ $(document).ready(function(){
 
 			if(nextClose){
 				table.prev().filter('h2').find('span').addClass("btn btn-success").html("APERTO ORA");
-				$(document).trigger("market-is-open", [table.data('orario'), nextClose]);
+				var appendText = '<br />(chiude alle ore ' + nextClose.format("HH:mm") + ')';
+				$('[data-market="'+table.data('orario')+'"]').addClass('text-success').removeClass('text-danger').html("<i class='fa fa-clock'></i> Adesso <strong>APERTO</strong>" + appendText)
 			}else{												
 				table.prev().filter('h2').find('span').removeClass("btn btn-success").empty();
-				$(document).trigger("market-is-close", [table.data('orario'), nextOpen]);
+				var appendText = '<br />(apre ' + nextOpen.calendar() + ')';
+				$('[data-market="'+table.data('orario')+'"]').addClass('text-danger').removeClass('text-success').html("<i class='fa fa-clock'></i> Adesso <strong>CHIUSO</strong>" + appendText)
 			}
 		});
 	};
@@ -128,23 +130,23 @@ $(document).ready(function(){
 		calcolaOrario();
 	});
 
-	$('#orari-di-apertura').on('click', function(){
+	$('.button-orari-di-apertura').on('click', function(){
 		calcolaOrario();
 	});
 
-	$(document).on("market-is-open", function (e, id, nextClosing) {
-		var appendText;
-		if (nextClosing){
-			appendText = ' (chiude alle ore ' + nextClosing.format("HH:mm") + ')';
+	function shouldDisplayOpeningHours() {      	    
+	    if ($('.visible-xs').first().is(':visible')){
+	    	return false;
+	    }
+	    if (typeof(sessionStorage) !== "undefined") {
+		    return sessionStorage.displayOpeningHours != 1;
 		}
-		$('[data-market="'+id+'"]').addClass('text-success').removeClass('text-danger').html("<i class='fa fa-clock'></i> Adesso <strong>APERTO</strong>" + appendText)
-	});
-	$(document).on("market-is-close", function (e, id, nextOpening) {      
-		var appendText;
-		if (nextOpening){
-		if (nextOpening)
-			appendText = ' (apre ' + nextOpening.calendar() + ')';
+		return CurrentNode == 2;      
+    }    
+    if (shouldDisplayOpeningHours()) {		
+		if (typeof(sessionStorage) !== "undefined") {
+		    sessionStorage.displayOpeningHours = 1;
 		}
-		var market = $('[data-market="'+id+'"]').addClass('text-danger').removeClass('text-success').html("<i class='fa fa-clock'></i> Adesso <strong>CHIUSO</strong>" + appendText)
-	});
+    	$('.button-orari-di-apertura').first().trigger('click');
+    }
 });

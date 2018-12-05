@@ -42,28 +42,28 @@
     <div id="{$block.id}" class="openpa-widget {$block.view} color">
 
       <div class="events_wide_wrapper">
-          <div class="row">
+          <div class="row" style="margin: 10px 0">
 
             {if and( $show_title, $block.name|ne('') )}
                 <div class="col-xs-12 col-sm-4">
-                  <h3 class="openpa-widget-title u-margin-top-s">{if and($valid_node, $link_top_title)}<a href={$valid_node.url_alias|ezurl()}>{/if}{$block.name|wash()}{if and($valid_node, $link_top_title)}</a>{/if}</h3>
+                  <h3 class="openpa-widget-title" style="margin: 0">{if and($valid_node, $link_top_title)}<a href={$valid_node.url_alias|ezurl()}>{/if}{$block.name|wash()}{if and($valid_node, $link_top_title)}</a>{/if}</h3>
                 </div>
               {/if}
 
               <div class="col-xs-12 col-sm-8">
-                  {if and( $day_events_count|gt(0), $prossimi_count|gt(0) )}
+                  {if or( $day_events_count|gt(0), $prossimi_count|gt(0) )}
                       <ul role="tablist" class="list-inline text-right">
                           {if $day_events_count|ne(0)}
                               <li class="eventi-oggi">
                                   <a href="#oggi" data-toggle="tab">
-                                      <i class="fa fa-clock"></i> Oggi
+                                      <i class="fa fa-clock"></i> <span class="hidden-xs">Oggi</span>
                                   </a>
                               </li>
                           {/if}
                           {if $prossimi_count|gt(0)}
-                              <li class="eventi-futuri eventi-{$block.custom_attributes.tab_title|slugize}">
+                              <li class="eventi-futuri eventi-{$block.custom_attributes.tab_title|slugize}{if $day_events_count|eq(0)} hide{/if}">
                                   <a href="#{$block.custom_attributes.tab_title|slugize}" data-toggle="tab">
-                                      <i class="fa fa-calendar"></i> {$block.custom_attributes.tab_title}
+                                      <i class="fa fa-calendar"></i> <span class="hidden-xs">{$block.custom_attributes.tab_title}</span>
                                   </a>
                               </li>
                           {/if}
@@ -71,7 +71,7 @@
                           {if $show_link}
                               <li class="jump-to-calendar">
                                   <a href="{$valid_node.url_alias|ezurl(no)}" title="Vai al calendario">
-                                      <i class="fa fa-calendar"></i> Tutti
+                                      <i class="fa fa-calendar"></i> <span class="hidden-xs">Vai al calendario</span>
                                   </a>
                               </li>
                           {/if}
@@ -91,7 +91,7 @@
             <div class="openpa-widget-content {if $block.view|ends_with('_wide')}container-fluid{/if}" id="oggi">
                 <div class="row panels-container">
                     {foreach $day_events as $i => $child max 10}
-                    <div class="col-md-{$col}">
+                    <div class="col-sm-{$col}">
                         {node_view_gui content_node=$child.node view=panel image_class=agid_panel show_image=false() event=$child}
                     </div>
                     {delimiter modulo=$modulo}</div><div class="row panels-container {if $block.view|ends_with('_wide')}container-fluid{/if}">{/delimiter}

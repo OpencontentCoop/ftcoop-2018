@@ -16,8 +16,8 @@
 
 {set $height = $height|fix_dimension()}
 
-<div class="row">
-  <div class="{if $show_list}{if $items_per_row|eq(1)}col-md-12{else}col-xs-8 col-sm-9{/if}{else}col-md-12{/if}">
+<div class="row children-map">
+  <div class="{if $show_list}{if $items_per_row|eq(1)}col-md-12{else}col-xs-12 col-sm-8{/if}{else}col-md-12{/if}">
 	<div id="map-{$node.node_id}" style="height: {$height}px; width: 100%"></div>
 
 	<script>	
@@ -58,17 +58,28 @@
 		var id = $(e.currentTarget).data('id');
 		var m = markerMap[id];
 		markers.zoomToShowLayer(m, function() { m.fire('click');});
+		{/literal}{if $items_per_row|gt(1)}{literal}
+		if ($('.visible-xs').first().is(':visible')){
+    	  $(this).parents('.children-map-markers').hide();
+    	}
+    	{/literal}{/if}{literal}
 		e.preventDefault();
 	  }
+	  $('.toggle-markers').on('click', function(){
+    	$(this).next().show();
+      });      
 	};
 	{/literal}
 	{/run-once}
-	loadMap('map-{$node.node_id}', 'markers-{$node.node_id}', "{concat('/openpa/data/map_markers'|ezurl(no), '?parentNode=',$node.node_id, '&classIdentifiers=', $class_identifiers|implode(',') )}&contentType=geojson");	
-	</script>
+	$(document).ready(function(){ldelim}
+		loadMap('map-{$node.node_id}', 'markers-{$node.node_id}', "{concat('/openpa/data/map_markers'|ezurl(no), '?parentNode=',$node.node_id, '&classIdentifiers=', $class_identifiers|implode(',') )}&contentType=geojson");	
+	{rdelim});
+	</script>	
   </div>
 
   {if $show_list}
-  <div class="{if $items_per_row|eq(1)}col-md-12{else}col-xs-4 col-sm-3{/if}">
+  {if $items_per_row|gt(1)}<button class="toggle-markers btn btn-default btn-lg visible-xs"><i class="fa fa-map-marker"></i></button>{/if}
+  <div class="children-map-markers {if $items_per_row|eq(1)}col-md-12{else}col-xs-12 col-sm-4{/if}">
     <ul id="markers-{$node.node_id}" class="list-markers-text list-unstyled {if $items_per_row|eq(1)}list-inline{/if}" {if $items_per_row|gt(1)} style="height: {$height}px;overflow-y: auto"{/if}></ul>
   </div>
   {/if}

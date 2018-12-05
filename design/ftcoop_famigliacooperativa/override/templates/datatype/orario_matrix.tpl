@@ -19,22 +19,24 @@
 {else}
 
     <h2><i class="fa fa-clock"></i> Orari <span></span></h2>    
-    <table class="table" cellspacing="0" data-orario="{$object.id}">
-        <tr>
-            {foreach $matrix.columns.sequential as $column_name}
-                <th data-week_date="{$column_name.identifier}">{$column_name.name|wash()}</th>
-            {/foreach}
-        </tr>
-        {foreach $matrix.rows.sequential as $row}
-            {def $count = 1}
+    <div class="table-responsive">
+        <table class="table" cellspacing="0" data-orario="{$object.id}">
             <tr>
-                {foreach $row.columns as $column}
-                    <td data-week_date="{$count}">{$column|wash( xhtml )}</td>
-                    {set $count = $count|sum(1)}
+                {foreach $matrix.columns.sequential as $column_name}
+                    <th data-week_date="{$column_name.identifier}">{$column_name.name|wash()}</th>
                 {/foreach}
             </tr>
-            {undef $count}
-        {/foreach}
-    </table>
+            {foreach $matrix.rows.sequential as $row}
+                {def $count = 1}
+                <tr>
+                    {foreach $row.columns as $column}
+                        <td data-week_date="{$count}">{$column|wash( xhtml )}</td>
+                        {set $count = $count|sum(1)}
+                    {/foreach}
+                </tr>
+                {undef $count}
+            {/foreach}
+        </table>
+    </div>
     
 {/if}

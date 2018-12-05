@@ -23,11 +23,13 @@
     {include uri=$openpa.content_infocollection.template}
 
     {include uri=$openpa.control_children.template}
-	
+
   </div>
     
 </div>
 </div>
+
+{include uri='design:parts/ti_potrebbe_interessare.tpl'}
 
 {ezpagedata_set('require_container', false())}
 {include uri='design:parts/load_website_toolbar.tpl'}

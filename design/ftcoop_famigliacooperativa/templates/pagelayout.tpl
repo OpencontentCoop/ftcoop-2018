@@ -42,6 +42,7 @@
 </head>
 <body>
 {include uri='design:page_body_tag_manager.tpl'}
+{include uri='design:page_browser_alert.tpl'}
 
 <div id="page">
 
@@ -100,12 +101,6 @@
 {cache-block ignore_content_expiry keys=array( $access_type.name, 'orari-di-apertura' )}
 {include uri='design:modal_orari_di_apertura.tpl'}
 {/cache-block}
-
-{if ftcoop_pagedata().is_global_root}
-    {cache-block ignore_content_expiry keys=array( $access_type.name, ftcoop_pagedata().global_root_node )}
-        {include uri='design:atoms/popup.tpl'}
-    {/cache-block}
-{/if}
 
 <script type="text/javascript">//<![CDATA[
     var UiContext = "{$ui_context}",

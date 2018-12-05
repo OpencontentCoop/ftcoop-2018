@@ -35,7 +35,10 @@
     'jquery.opendataSearchView.js',
     'facet_search.js',
     'jsrender.js',
-    "famiglia_cooperativa.js"
+    "famiglia_cooperativa.js",
+    'highcharts/highcharts.js', 
+    'highcharts/themes/ftcoop.js',
+    "ftcoop_data.js"
 ))}
 
 <!--[if lt IE 9]>

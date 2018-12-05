@@ -16,7 +16,7 @@
   
             {undef $tree_menu}
         {/foreach}
-        <li class="lastli pull-right"><a href="#" id="orari-di-apertura" data-toggle="modal" data-target="#orari-di-apertura-modal">Orari di apertura <i class="fa fa-shopping-cart"></i></a></li>
+        <li class="lastli pull-right"><a href="#" class="button-orari-di-apertura" data-toggle="modal" data-target="#orari-di-apertura-modal">Orari di apertura <i class="fa fa-shopping-cart"></i></a></li>
         </ul>
     {/if}
 

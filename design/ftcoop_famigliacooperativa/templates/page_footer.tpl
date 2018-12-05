@@ -12,7 +12,7 @@
 
         <ul class="list-unstyled" style="margin-bottom: 30px">
           {if is_set( $pagedata.contacts.indirizzo )}
-          <li><a href="http://maps.google.com/maps?q={$pagedata.contacts.indirizzo}"><i class="fa fa-building"></i> {$pagedata.contacts.indirizzo}</a></li>
+          <li><a href="http://maps.google.com/maps?q={$pagedata.contacts.indirizzo}"><i class="fa fa-map-marker"></i> {$pagedata.contacts.indirizzo}</a></li>
           {/if}
           {if is_set( $pagedata.contacts.email )}
           <li><a href="mailto:{$pagedata.contacts.email}"><i class="fa fa-envelope"></i> {$pagedata.contacts.email}</a></li>
@@ -28,6 +28,9 @@
           {/if}
         </ul>
 
+        {if $pagedata.contacts.partita_iva}
+        <script>var PartitaIva = "{$pagedata.contacts.partita_iva}";</script>
+        {/if}
 
         <div class="social-buttons">
 

@@ -369,14 +369,14 @@
                 $.each(view.filters, function(){
                     var filter = this;
                     var currentValues = filter.getCurrent();
-                    var filterContainer = $(filter.container);  
+                    var filterContainer = $(filter.container, that);  
                     var currentXsFilterContainer = filterContainer.parents('div.filter-wrapper').find('.current-xs-filters');                
                     currentXsFilterContainer.empty();
                     if (currentValues.length && jQuery.inArray('all', currentValues) == -1) {
                         var item = $('<li><strong>'+ filter.label +'</strong>:</li>');                    
                         $.each(currentValues, function(){                        
                             var value = this;
-                            var valueElement = $('a[data-value="'+filter.quoteValue(value)+'"]');                        
+                            var valueElement = $('a[data-value="'+filter.quoteValue(value)+'"]', filter.container);                        
                             var name = valueElement.data('name');
                             currentXsFilterContainer.append('<li>'+name+'</li>');                        
                             $('<a href="#" style="margin:0 5px"><i class="fa fa-times"></i> '+name+'</a>')                            
@@ -428,7 +428,7 @@
                     type: 'null', 
                     facetSort: 'alpha', 
                     facetLimit: 100,
-                    containerSelector: 'ul[data-filter="'+filter.queryField+'"]',
+                    containerSelector: '#'+that.attr('id')+' ul[data-filter="'+filter.queryField+'"]',
                     cssClasses: options.cssClasses
                 }, filter);
                 var filterWrapper = that.find('.filters-wrapper').append($(template.render(filter)));

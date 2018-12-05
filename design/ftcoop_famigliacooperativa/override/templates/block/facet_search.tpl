@@ -122,7 +122,7 @@ $(document).ready(function(){
                 if (image.length > 0 && typeof image[0].id == 'number') {
                     return $.opendataTools.settings('accessPath') + '/image/view/' + image[0].id + '/agid_panel';
                 }
-                return $.opendataTools.settings('accessPath') + image.url;
+                return image.url;
             }
         }),
         'filters':[{/literal}

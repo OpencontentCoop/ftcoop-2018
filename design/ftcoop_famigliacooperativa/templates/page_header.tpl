@@ -1,47 +1,40 @@
 {def $root_node = fetch( 'content', 'node', hash( 'node_id', $pagedata.root_node ) )}
+{if is_set($pagedata)|not()}{def $pagedata = openpapagedata()}{else}{set $pagedata = openpapagedata()}{/if}
 <header>
 
+    <p class="visible-xs logo-xs bg-primary">
+        <a href={"/"|ezurl()} title="vai alla home page">                      
+            <img src={"images/logo-xs.png"|ezdesign()} alt="{$root_node.name|wash()}"/>
+            <span>{$root_node.name|wash()}</span>
+        </a>
+    </p>
     <div class="container-fluid">
         <div class="row">
-            <div class="bg-primary col-md-3 same-height header-branding">
-                <div class="branding">
-                    
+            <div class="bg-primary col-md-3 same-height header-branding">                
+                <div class="branding">                    
                     <a href={"/"|ezurl()} title="vai alla home page">
-                        <img class="logo" src={"images/logo-bianco.png"|ezdesign()} alt="{$root_node.name|wash()}"/>
-                        <small>{$root_node.name|explode('Famiglia Cooperativa')|implode('')|explode('Famiglia cooperativa')|implode('')|wash()}</small>
+                        <img class="logo hidden-xs" src={"images/logo-bianco.png"|ezdesign()} alt="{$root_node.name|wash()}"/>
+                        <small class="hidden-xs">{$root_node.name|wash()}</small>
                     </a>
 
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
-                        <span class="sr-only">Menù di navigazione</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar" style="margin:0">
+                        <i style="font-size: 42px;vertical-align: middle;padding: 0 0 0 20px;color: #fff" class="fa fa-bars"></i>
                     </button>
 
                     <div class="mobile-contacts hidden-md hidden-lg">
-                        {def $telefono = false()}
-                        {if $subsite|has_attribute( 'telefono' )}
-                            {set $telefono = $subsite|attribute( 'telefono' )}
-                        {elseif $root_node|has_attribute( 'telefono' )}
-                            {set $telefono = $root_node|attribute( 'telefono' )}
-                        {/if}
-                        {def $geo = false()}
-                        {if $subsite|has_attribute( 'geo' )}
-                            {set $geo = $subsite|attribute( 'geo' )}
-                        {elseif $root_node|has_attribute( 'geo' )}
-                            {set $geo = $root_node|attribute( 'geo' )}
-                        {/if}
-                        {if $telefono}
-                            <a href="tel:{attribute_view_gui attribute=$telefono}">
-                                <img src={'images/i-phone.png'|ezdesign()} alt="{attribute_view_gui attribute=$telefono}"/>
+                        {if is_set( $pagedata.contacts.telefono )}
+                            <a href="tel:{$pagedata.contacts.telefono|wash()}">
+                                <i class="fa fa-phone"></i>
                             </a>
                         {/if}
-                        {if $geo}
-                            <a target="_blank"
-                               href="https://www.google.com/maps/dir//'{$geo.content.latitude},{$geo.content.longitude}'/@{$geo.content.latitude},{$geo.content.longitude},15z?hl=it">
-                                <img src={'images/i-map-pin.png'|ezdesign()} alt="Come arrivare" />
+                        {if is_set( $pagedata.contacts.indirizzo )}
+                            <a target="_blank" href="http://maps.google.com/maps?q={$pagedata.contacts.indirizzo|wash()}">
+                                <i class="fa fa-map-marker"></i>
                             </a>
                         {/if}
+                        <a href="#" class="button-orari-di-apertura" data-toggle="modal" data-target="#orari-di-apertura-modal">
+                            <i class="fa fa-clock"></i>
+                        </a>
                     </div>
 
                 </div>
