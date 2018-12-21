@@ -26,7 +26,13 @@
             buildQuery: function () {
                 var currentValues = this.getCurrent();
                 if (currentValues.length && jQuery.inArray('all', currentValues) == -1) {
-                    return queryField+' in [\'' + currentValues.join("','") + '\']';
+                    return queryField+' in [\'' + $.map(currentValues, function (item) {
+                        return item.toString()
+                            .replace(/"/g, '\\\"')
+                            .replace(/'/g, "\\'")
+                            .replace(/\(/g, "\\(")
+                            .replace(/\)/g, "\\)");
+                    }).join("','") + '\']';
                 }
 
                 return null;
@@ -369,7 +375,7 @@
                 $.each(view.filters, function(){
                     var filter = this;
                     var currentValues = filter.getCurrent();
-                    var filterContainer = $(filter.container, that);  
+                    var filterContainer = $(filter.container);  
                     var currentXsFilterContainer = filterContainer.parents('div.filter-wrapper').find('.current-xs-filters');                
                     currentXsFilterContainer.empty();
                     if (currentValues.length && jQuery.inArray('all', currentValues) == -1) {
