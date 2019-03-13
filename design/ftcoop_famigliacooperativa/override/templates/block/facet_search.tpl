@@ -86,8 +86,8 @@
 </script>
 <script id="tpl-item" type="text/x-jsrender">
 <div class="col-sm-6">    
-    <div class="media-panel">      
-      <figure style="background-image:url({{:~firstImageUrl(~i18n(data,'image'))}})"></figure>      
+    <div class="media-panel">
+      <figure style="background-image:url({{:~firstImageUrl(~i18n(data,'image'))}})"></figure>
       <div class="media has-image">
         <div class="caption" style="min-height:210px">
           <h4>
