@@ -261,19 +261,117 @@ function draw_bilancio( data, container )
     });    
 }
 
+
+function drawPieChart(data, container){
+  var browserData = [];
+  var versionsData = [];
+  for (var i = 0; i < data.data.data.length; i++) {
+    // add browser data
+    browserData.push({
+      name: data.data.categories[i],
+      y: data.data.data[i].y,
+      color: data.data.data[i].color
+    });
+    // add version data
+    for (var j = 0; j < data.data.data[i].drilldown.data.length; j++) {
+      var brightness = 0.2 - (j / data.data.data[i].drilldown.data.length) / 5 ;
+      versionsData.push({
+        name: data.data.data[i].drilldown.categories[j],
+        link: data.data.data[i].drilldown.links[j],
+        y: data.data.data[i].drilldown.data[j],
+        color: Highcharts.Color(data.data.data[i].color).brighten(brightness).get()
+      });
+    }
+  }
+  return new Highcharts.Chart({
+    chart: {
+      renderTo: container,
+      type: 'pie'
+    },
+    title: {
+      text: data.data.title
+    },
+    yAxis: {
+      title: {
+        text: data.name
+      }
+    },
+    plotOptions: {
+      pie: {
+        shadow: false
+      }
+    },
+    tooltip: {
+      formatter: function() {
+        return '<strong>'+ this.point.name +'</strong>';
+      }
+    },
+    legend: {
+      layout: 'vertical',
+      align: 'left',
+      verticalAlign: 'top',
+      x: 10,
+      y: 10,
+      labelFormatter: function() {
+        return this.name;
+      }
+    },labels: {
+      items: [{
+        html: '', // 'Powered by <a href="http://shop.highsoft.com/faq#what-is-commercial-website">"Highcharts JS"</a>',
+        style: {
+          left: '100px',
+          top: '260px',
+          color: 'white'
+        }
+      }]
+    },
+    series: [{
+      name: 'Organi',
+      data: browserData,
+      showInLegend: true,
+      size: '60%',
+      dataLabels: {
+        formatter: function() {
+          return null; // this.y > 0 ? this.point.name : null;
+        },
+        color: 'white',
+        distance: -30
+      }
+    }, {
+      name: 'Componenti',
+      data: versionsData,
+      innerSize: '60%',
+      dataLabels: {
+        formatter: function() {
+          // display only if larger than 1
+          return this.y > 0 ? '<strong><a href="'+this.point.link+'">'+ this.point.name +'</a></strong> '  : null;
+        },
+        color: '#000000'
+      }
+    }]
+  });
+}
+
+
+
 $(document).ready(function(){
 	if ($('[data-ftcoop]').length > 0){
 		$.getJSON( "//www.cooperazionetrentina.it/ftc/data/coop/?partita_iva="+PartitaIva+"&callback=?", {}, function(response, status, xhr) {        				
 			if (status == 'success'){ 
 				if (response.data.bilancio.data.has_data && $('[data-ftcoop="bilancio"]').length > 0) {
-			        draw_bilancio( response.data.bilancio.data, $('[data-ftcoop="bilancio"]')[0] );
-		      	}
-		      	if ($('[data-ftcoop="soci"]').length > 0) {
-		      		draw_soci( response.data.soci.data, $('[data-ftcoop="soci"]')[0] );
-		      	}
-		      	if ($('[data-ftcoop="lavoratori"]').length > 0) {
-		      		draw_lavoratori( response.data.lavoratori.data, $('[data-ftcoop="lavoratori"]')[0] );
-		      	}
+          draw_bilancio( response.data.bilancio.data, $('[data-ftcoop="bilancio"]')[0] );
+        }
+        if ($('[data-ftcoop="soci"]').length > 0) {
+          draw_soci( response.data.soci.data, $('[data-ftcoop="soci"]')[0] );
+        }
+        if ($('[data-ftcoop="lavoratori"]').length > 0) {
+          draw_lavoratori( response.data.lavoratori.data, $('[data-ftcoop="lavoratori"]')[0] );
+        }
+
+        if ($('[data-ftcoop="cda"]').length > 0) {
+          draw_lavoratori( response.data.cda, $('[data-ftcoop="cda"]')[0] );
+        }
+
 			}  
 		});
 	}
