@@ -298,7 +298,8 @@ function drawPieChart(data, container){
     },
     plotOptions: {
       pie: {
-        shadow: false
+        shadow: false,
+        center: ['50%', '50%']
       }
     },
     tooltip: {
@@ -329,6 +330,7 @@ function drawPieChart(data, container){
       name: 'Organi',
       data: browserData,
       showInLegend: true,
+      size: '80%',
       size: '60%',
       dataLabels: {
         formatter: function() {
@@ -357,7 +359,11 @@ function drawPieChart(data, container){
 $(document).ready(function(){
 	if ($('[data-ftcoop]').length > 0){
 		$.getJSON( "//www.cooperazionetrentina.it/ftc/data/coop/?partita_iva="+PartitaIva+"&callback=?", {}, function(response, status, xhr) {        				
-			if (status == 'success'){ 
+			if (status == 'success'){
+
+			  console.log(PartitaIva);
+
+
 				if (response.data.bilancio.data.has_data && $('[data-ftcoop="bilancio"]').length > 0) {
           draw_bilancio( response.data.bilancio.data, $('[data-ftcoop="bilancio"]')[0] );
         }
@@ -367,11 +373,12 @@ $(document).ready(function(){
         if ($('[data-ftcoop="lavoratori"]').length > 0) {
           draw_lavoratori( response.data.lavoratori.data, $('[data-ftcoop="lavoratori"]')[0] );
         }
-
         if ($('[data-ftcoop="cda"]').length > 0) {
-          draw_lavoratori( response.data.cda, $('[data-ftcoop="cda"]')[0] );
+          drawPieChart( response.data.cda, $('[data-ftcoop="cda"]')[0] );
         }
-
+        if ($('[data-ftcoop="colleggio"]').length > 0) {
+          drawPieChart( response.data.cda, $('[data-ftcoop="colleggio"]')[0] );
+        }
 			}  
 		});
 	}
