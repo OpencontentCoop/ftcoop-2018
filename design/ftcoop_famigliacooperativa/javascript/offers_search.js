@@ -184,7 +184,7 @@
         'listWrapper': 'nav nav-pills nav-stacked'
       },
       'viewHelpers': $.opendataTools.helpers
-    }, settings)
+    }, settings);
 
 
     var filterTpl = $.templates(options.filterTpl);
@@ -228,9 +228,9 @@
           'Offset': options.offset,
         },
         beforeSend: function () {
-          $('#load-more').remove();
+          $('#load-more').html('<i class="fa fa-circle-notch fa-spin fa-fw"></i>');
           options.currentHtml = container.html();
-          container.html(spinner);
+          //container.html(spinner);
         },
         success(response) {
 
@@ -246,7 +246,7 @@
             var currentXsFilterContainer = filterContainer.parents('div.filter-wrapper').find('.current-xs-filters');
 
             currentXsFilterContainer.empty();
-            if (currentValues.length && jQuery.inArray('all', currentValues) == -1) {
+            if (currentValues.length && jQuery.inArray('all', currentValues) === -1) {
               var item = $('<li><strong>' + filter.label + '</strong>:</li>');
               $.each(currentValues, function () {
                 var value = this;
@@ -266,12 +266,12 @@
             }
           });
 
-          //
           if (response.count > 0) {
-            if (response.offset == 0) {
+            if (response.offset === 0) {
               options.offset = response.offset;
               container.html('');
             } else {
+              that.find('.offers-more').html('');
               container.html(options.currentHtml);
             }
 
@@ -289,7 +289,7 @@
           }
         },
       });
-    }
+    };
 
     var loadMore = function () {
       $('#load-more').on('click', function (e) {

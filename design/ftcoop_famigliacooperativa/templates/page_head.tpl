@@ -63,6 +63,18 @@
 
     {/foreach}
 
+    {if is_set($module_result.content_info.persistent_variable.opengraph)}
+        {foreach $module_result.content_info.persistent_variable.opengraph as $key => $value}
+            {if is_array($value)}
+                {foreach $value as $v}
+                    <meta property="{$key}" content="{$v|wash()}" />
+                {/foreach}
+            {else}
+                <meta property="{$key}" content="{$value|wash()}" />
+            {/if}
+        {/foreach}
+    {/if}
+
     <meta name="MSSmartTagsPreventParsing" content="TRUE" />
 
 {if $canonical_link}

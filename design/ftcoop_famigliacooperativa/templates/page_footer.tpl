@@ -82,7 +82,7 @@
       <script>
         {literal}        
         var map = L.map('footer-map').addLayer(
-          L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {maxZoom: 18,attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'})
+          L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {maxZoom: 18,attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'})
         );
         map.scrollWheelZoom.disable();
         var featureGroup = L.featureGroup().addTo(map);

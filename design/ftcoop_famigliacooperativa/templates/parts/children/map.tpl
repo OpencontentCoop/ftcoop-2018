@@ -25,7 +25,7 @@
 	{literal}
 	var loadMap = function(mapId,markersId,geoJson){
 	  //var tiles = L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18,attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'});
-	  var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {maxZoom: 18,attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'});
+	  var tiles = L.tileLayer('//{s}.tile.osm.org/{z}/{x}/{y}.png', {maxZoom: 18,attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'});
 	  var map = L.map(mapId).addLayer(tiles);
 	  map.scrollWheelZoom.disable();
 	  var markers = L.markerClusterGroup();

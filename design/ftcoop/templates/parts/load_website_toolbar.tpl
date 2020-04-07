@@ -7,16 +7,12 @@
             //load editor tool button
             var $editorTools = $("#editor_tools");            
             var help = $("#ezwt-help");
-            help.removeClass('hide');                
-            if ( $editorTools.length > 0 ){                                
-                if ( help.data('show-editor') == 0 ) $editorTools.addClass('hide');                
-            }
+            help.removeClass('hide');
             help.find('a').on( 'click', function(e){                                        
-                if ($editorTools.hasClass('hide')){
-                    $editorTools.removeClass('hide'); 
-                    $editorTools.removeAttr('style');
+                if ($editorTools.is(':hidden')){
+                    $editorTools.show();
                 }else{
-                    $editorTools.addClass('hide');
+                    $editorTools.hide();
                 }
                 $.ez.setPreference( 'show_editor', $editorTools.is(':hidden') == false ? 1 : 0 );
                 e.preventDefault();
@@ -34,3 +30,5 @@
     });
     {/literal}</script>
 {/if}
+
+{ezpagedata_set('opengraph', ftcoop_opengraph($node))}
