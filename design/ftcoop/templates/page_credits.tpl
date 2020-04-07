@@ -4,7 +4,8 @@
             <div class="max-width">
                 <p>
                     Copyright {currentdate()|datetime( 'custom', '%Y' )}  <a href="http://www.cooperazionetrentina" title="visita il sito della Cooperazione Trentina">Cooperazione Trentina</a>
-                    &middot; Powered by <a class="text-decoration-none" href="http://www.opencontent.it" title="OpenContent">OpenContent</a> {if openpaini('CreditsSettings', 'CodeVersion', false())}{openpaini('CreditsSettings', 'CodeVersion', false())}{/if}
+                    &middot; Powered by <a class="text-decoration-none" href="http://www.opencontent.it" title="OpenContent">OpenContent</a>
+                    {if openpaini('CreditsSettings', 'CodeVersion', false())}<small class="text-muted pull-right">{openpaini('CreditsSettings', 'CodeVersion', false())}</small>{/if}
                 </p>
             </div>
         </div>
