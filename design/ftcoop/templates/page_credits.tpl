@@ -2,7 +2,10 @@
     <div class="container">
         <div class="row">
             <div class="max-width">
-                <p>Copyright {currentdate()|datetime( 'custom', '%Y' )}  <a href="http://www.cooperazionetrentina" title="visita il sito della Cooperazione Trentina">Cooperazione Trentina</a> </p>
+                <p>
+                    Copyright {currentdate()|datetime( 'custom', '%Y' )}  <a href="http://www.cooperazionetrentina" title="visita il sito della Cooperazione Trentina">Cooperazione Trentina</a>
+                    &middot; Powered by <a class="text-decoration-none" href="http://www.opencontent.it" title="OpenContent">OpenContent</a> {if openpaini('CreditsSettings', 'CodeVersion', false())}{openpaini('CreditsSettings', 'CodeVersion', false())}{/if}
+                </p>
             </div>
         </div>
     </div>
