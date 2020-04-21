@@ -322,7 +322,7 @@ class FTCoop2018Operators
 
             $image = $this->loadImage(['image', 'images'], $dataMap);
             if ($image) {
-                $alias = $image->attribute('large');
+                $alias = $image->attribute('reference');
                 $returnArray['og:image'] = $alias['url'];
             }
             if (!isset($returnArray['og:image'])) {
