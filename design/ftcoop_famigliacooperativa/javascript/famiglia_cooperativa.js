@@ -116,7 +116,7 @@ $(document).ready(function(){
 				table.prev().filter('h2').find('span').addClass("btn btn-success").html("APERTO ORA");
 				var appendText = '<br />(chiude alle ore ' + nextClose.format("HH:mm") + ')';
 				$('[data-market="'+table.data('orario')+'"]').addClass('text-success').removeClass('text-danger').html("<i class='fa fa-clock'></i> Adesso <strong>APERTO</strong>" + appendText)
-			}else{												
+			}else if (nextOpen){
 				table.prev().filter('h2').find('span').removeClass("btn btn-success").empty();
 				var appendText = '<br />(apre ' + nextOpen.calendar() + ')';
 				$('[data-market="'+table.data('orario')+'"]').addClass('text-danger').removeClass('text-success').html("<i class='fa fa-clock'></i> Adesso <strong>CHIUSO</strong>" + appendText)
