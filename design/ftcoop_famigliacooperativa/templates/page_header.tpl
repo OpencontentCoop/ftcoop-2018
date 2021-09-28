@@ -4,7 +4,7 @@
 
     <p class="visible-xs logo-xs bg-primary">
         <a href={"/"|ezurl()} title="vai alla home page">                      
-            <img src={"images/logo-xs.png"|ezdesign()} alt="{$root_node.name|wash()}"/>
+            <img src={appini('SiteSettings', 'LogoXs', 'images/logo-xs.png')|ezdesign()} alt="{$root_node.name|wash()}"/>
             <span>{$root_node.name|wash()}</span>
         </a>
     </p>
@@ -13,7 +13,7 @@
             <div class="bg-primary col-md-3 same-height header-branding">                
                 <div class="branding">                    
                     <a href={"/"|ezurl()} title="vai alla home page">
-                        <img class="logo hidden-xs" src={"images/logo-bianco.png"|ezdesign()} alt="{$root_node.name|wash()}"/>
+                        <img class="logo hidden-xs" src={appini('SiteSettings', 'LogoBianco', 'images/logo-bianco.png')|ezdesign()} alt="{$root_node.name|wash()}"/>
                         <small class="hidden-xs">{$root_node.name|wash()}</small>
                     </a>
 

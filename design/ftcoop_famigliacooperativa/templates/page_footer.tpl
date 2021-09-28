@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-{if ftcoop_pagedata().require_container}6{else}4 col-md-offset-1{/if}">
-        <img class="footer-logo" src={"images/logo-blu.png"|ezdesign()} class="img-responsive"  alt="" title="" />
+        <img class="footer-logo" src={appini('SiteSettings', 'LogoBlu', 'images/logo-blu.png')|ezdesign()} class="img-responsive"  alt="" title="" />
         {def $footer_notes = fetch( 'openpa', 'footer_notes' )}
         {if $footer_notes}
             {attribute_view_gui attribute=$footer_notes}

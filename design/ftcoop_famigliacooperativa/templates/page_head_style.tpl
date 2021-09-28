@@ -3,12 +3,12 @@
     {def $load_css_file_list = true()}
 {/if}
 
-{def $app_style = concat('app', appini('SiteSettings', 'StyleSuffix', ''), '.css')}
+{def $style_suffix = appini('SiteSettings', 'StyleSuffix', '')}
+{def $app_style = concat('app', $style_suffix, '.css')}
 
 {if $load_css_file_list}
 {ezcss_load( array(
         'fontawesome/css/fontawesome-all.css',
-        $app_style,
         'leaflet/leaflet.0.7.2.css',
         'debug.css',
         'websitetoolbar.css',
@@ -24,14 +24,13 @@
         'fuelux.css',
         ezini( 'StylesheetSettings', 'CSSFileList', 'design.ini' ),
         ezini( 'StylesheetSettings', 'FrontendCSSFileList', 'design.ini' ),
-        'famiglia_cooperativa.css',
-        'facet_search.css'
+        'facet_search.css',
+        $app_style
     ),
     'all', 'text/css', 'stylesheet' )}
 {else}
 {ezcss_load( array(
         'fontawesome/css/fontawesome-all.css',
-        $app_style,
         'leaflet/leaflet.0.7.2.css',
         'debug.css',
         'websitetoolbar.css',
@@ -45,8 +44,8 @@
         'controls-audio.css',
         'dataTables.bootstrap.css',
         'fuelux.css',
-        'famiglia_cooperativa.css',
-        'facet_search.css'
+        'facet_search.css',
+        $app_style
     ),
     'all', 'text/css', 'stylesheet' )}
 {/if}
