@@ -358,7 +358,7 @@ function drawPieChart(data, container){
 
 $(document).ready(function(){
 	if ($('[data-ftcoop]').length > 0){
-		$.getJSON( "//www.cooperazionetrentina.it/ftc/data/coop/?partita_iva="+PartitaIva+"&callback=?", {}, function(response, status, xhr) {        				
+		$.getJSON( "//old.cooperazionetrentina.it/ftc/data/coop/?partita_iva="+PartitaIva+"&callback=?", {}, function(response, status, xhr) {
 			if (status == 'success'){
 
 			  console.log(PartitaIva);
